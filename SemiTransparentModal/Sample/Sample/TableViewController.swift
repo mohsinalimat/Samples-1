@@ -16,6 +16,7 @@ class TableViewController: UITableViewController {
         
         tableView.backgroundColor = .clearColor()
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 100))
+        tableView.tableFooterView = UIView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -29,12 +30,12 @@ class TableViewController: UITableViewController {
 extension TableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 1
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
-        cell.backgroundColor = .blueColor()
+        cell.textLabel?.text = "Dismiss Modal"
         return cell
     }
     
