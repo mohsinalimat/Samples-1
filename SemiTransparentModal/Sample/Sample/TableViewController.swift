@@ -17,6 +17,10 @@ class TableViewController: UITableViewController {
         tableView.backgroundColor = .clearColor()
         tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 100))
         tableView.tableFooterView = UIView()
+        
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .Done, target: self, action: "dismiss")
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,6 +49,15 @@ extension TableViewController {
 extension TableViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        dismiss()
+    }
+    
+}
+
+// MARK: - Helpers
+extension TableViewController {
+    
+    func dismiss() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

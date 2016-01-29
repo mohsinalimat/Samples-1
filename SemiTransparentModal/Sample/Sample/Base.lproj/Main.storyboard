@@ -21,7 +21,7 @@
                                 <rect key="frame" x="251" y="285" width="99" height="30"/>
                                 <state key="normal" title="Present Modal"/>
                                 <connections>
-                                    <segue destination="RgX-Lw-jR1" kind="presentation" modalPresentationStyle="overFullScreen" id="VUR-DR-y2z"/>
+                                    <segue destination="zdO-iU-bVC" kind="presentation" modalPresentationStyle="overFullScreen" id="VUR-DR-y2z"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -48,8 +48,27 @@
                             <outlet property="delegate" destination="RgX-Lw-jR1" id="vgr-ys-Mpp"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="Ky0-h4-gJn"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cIi-pG-XVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2096" y="468"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Rw4-uq-JLf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zdO-iU-bVC" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="E84-C3-hc8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RgX-Lw-jR1" kind="relationship" relationship="rootViewController" id="yO0-kX-gBu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oa2-Io-Rfb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1284" y="468"/>
         </scene>
