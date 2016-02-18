@@ -23,9 +23,8 @@ extension CustomTransition: UIViewControllerAnimatedTransitioning {
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         let container = transitionContext.containerView()!
-//        let viewControllers: (from: UIViewController, to: UIViewController) = (transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!, transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!)
-        let views: (from: UIView, to: UIView) = (transitionContext.viewForKey(UITransitionContextFromViewKey)!, transitionContext.viewForKey(UITransitionContextToViewKey)!)
-//        let views: (from: UIView, to: UIView) = (viewControllers.from.view, viewControllers.to.view)
+        let viewControllers: (from: UIViewController, to: UIViewController) = (transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!, transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!)
+        let views: (from: UIView, to: UIView) = (transitionContext.viewForKey(UITransitionContextFromViewKey) ?? viewControllers.from.view, transitionContext.viewForKey(UITransitionContextToViewKey) ?? viewControllers.to.view)
         let duration = transitionDuration(transitionContext)
         
         let offScreenBottom = CGAffineTransformMakeTranslation(0, container.frame.height)
@@ -50,6 +49,10 @@ extension CustomTransition: UIViewControllerAnimatedTransitioning {
             }
         }) { _ in
             transitionContext.completeTransition(true)
+            
+            if !UIApplication.sharedApplication().keyWindow!.subviews.contains(views.to) {
+                UIApplication.sharedApplication().keyWindow!.addSubview(views.to)
+            }
         }
     }
     

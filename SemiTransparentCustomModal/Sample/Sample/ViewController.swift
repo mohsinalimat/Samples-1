@@ -33,6 +33,7 @@ extension ViewController {
         let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("TableViewControllerId")
         let navigationController = UINavigationController(rootViewController: viewController!)
         navigationController.transitioningDelegate = transition
+        navigationController.modalPresentationStyle = .Custom
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
