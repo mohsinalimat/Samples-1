@@ -23,38 +23,34 @@ extension CustomTransition: UIViewControllerAnimatedTransitioning {
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         let container = transitionContext.containerView()!
-        let viewControllers: (from: UIViewController, to: UIViewController) = (transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!, transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!)
+//        let viewControllers: (from: UIViewController, to: UIViewController) = (transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!, transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!)
         let views: (from: UIView, to: UIView) = (transitionContext.viewForKey(UITransitionContextFromViewKey)!, transitionContext.viewForKey(UITransitionContextToViewKey)!)
         let duration = transitionDuration(transitionContext)
-        
-        views.from.setNeedsLayout()
-        views.from.layoutIfNeeded()
-        views.to.setNeedsLayout()
-        views.to.layoutIfNeeded()
         
         let offScreenBottom = CGAffineTransformMakeTranslation(0, container.frame.height)
         
         if presenting {
+            views.to.frame = container.bounds
+            views.to.transform = offScreenBottom
             container.addSubview(views.from)
             container.addSubview(views.to)
-            views.to.transform = offScreenBottom
         } else {
+            views.to.transform = CGAffineTransformIdentity
+            views.to.frame = container.bounds
             container.addSubview(views.to)
             container.addSubview(views.from)
         }
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: {
             if self.presenting {
+                views.from.alpha = 0.5
                 views.to.transform = CGAffineTransformIdentity
             } else {
                 views.from.transform = offScreenBottom
+                views.to.alpha = 1
             }
-        }) { finished in
-            if transitionContext.transitionWasCancelled() {
-                transitionContext.completeTransition(false)
-            } else {
-                transitionContext.completeTransition(true)
-            }
+        }) { _ in
+            transitionContext.completeTransition(true)
         }
     }
     
