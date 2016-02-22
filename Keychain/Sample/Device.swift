@@ -10,35 +10,17 @@ import Foundation
 import KeychainAccess
 
 struct Device {
-    var UUID: String? {
-        print(Constants.Keychain.UUID.description)
-        
-//        let UUIDString = Keychain.keychain[Constants.Keychain.UUID.description]
-//        if let UUIDString = UUIDString {
-//            
-//        } else {
-//            
-//        }
-        return UIDevice.currentDevice().identifierForVendor?.UUIDString
+    
+    static var UUID: String? {
+        let keychain = Keychain()
+        // print all keychain items
+        // keychain.allItems().forEach { print("item: \($0)") }
+        var string = keychain[Constants.Keychain.UUID.description]
+        if string == nil {
+            string = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            keychain[Constants.Keychain.UUID.description] = string
+        }
+        return string
     }
-}
-
-private extension Keychain {
-    static let keychain = Keychain()
-}
-
-private extension NSBundle {
-    var name: String? {
-        return infoDictionary?["CFBundleName"] as? String
-    }
-}
-
-private enum Constants {
-    enum Keychain: String, CustomStringConvertible {
-        case UUID
-    }
-}
-
-private extension CustomStringConvertible {
-    var description: String { return String(reflecting: self) }
+    
 }
