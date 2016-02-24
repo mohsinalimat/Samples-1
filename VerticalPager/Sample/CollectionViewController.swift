@@ -42,9 +42,20 @@ extension CollectionViewController {
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! Cell
-        cell.imageView.image = images[indexPath.item]
-        return cell
+        return collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath)
+    }
+    
+}
+
+// MARK: - UICollectionViewDelegate
+extension CollectionViewController {
+    
+    override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        (cell as? Cell)?.imageView.image = images[indexPath.item]
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: true)
     }
     
 }

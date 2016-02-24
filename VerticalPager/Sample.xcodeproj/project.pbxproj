@@ -12,6 +12,7 @@
 		8BA656581C7D320400ABEB92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA656571C7D320400ABEB92 /* Assets.xcassets */; };
 		8BA6565B1C7D320400ABEB92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA656591C7D320400ABEB92 /* LaunchScreen.storyboard */; };
 		8BEDF88A1C7D3629001B5513 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDF8891C7D3629001B5513 /* CollectionViewController.swift */; };
+		8BEDF88C1C7D4836001B5513 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDF88B1C7D4836001B5513 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		8BA6565A1C7D320400ABEB92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BA6565C1C7D320400ABEB92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BEDF8891C7D3629001B5513 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		8BEDF88B1C7D4836001B5513 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				8BA656501C7D320300ABEB92 /* AppDelegate.swift */,
+				8BEDF88B1C7D4836001B5513 /* ViewController.swift */,
 				8BEDF8891C7D3629001B5513 /* CollectionViewController.swift */,
 				8BA656541C7D320300ABEB92 /* Main.storyboard */,
 				8BA656571C7D320400ABEB92 /* Assets.xcassets */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BEDF88C1C7D4836001B5513 /* ViewController.swift in Sources */,
 				8BEDF88A1C7D3629001B5513 /* CollectionViewController.swift in Sources */,
 				8BA656511C7D320300ABEB92 /* AppDelegate.swift in Sources */,
 			);
