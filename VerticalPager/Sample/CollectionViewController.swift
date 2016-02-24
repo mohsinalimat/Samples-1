@@ -15,6 +15,20 @@ class CollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Scroll Me"
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        visualEffectView.frame = self.view.bounds
+        visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.view.insertSubview(visualEffectView, atIndex: 0)
+        
+        self.collectionView?.backgroundColor = .clearColor()
+        self.collectionView?.scrollsToTop = false
+        self.collectionView?.decelerationRate = UIScrollViewDecelerationRateFast
+        self.collectionView?.showsVerticalScrollIndicator = false
         self.collectionView?.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
     }
     
@@ -29,9 +43,7 @@ extension CollectionViewController {
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! Cell
-        
-        
-        
+        cell.imageView.image = images[indexPath.item]
         return cell
     }
     
