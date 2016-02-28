@@ -12,14 +12,17 @@ class ApplicationCoordinator {
     
     var window: UIWindow
     
-    var childCoordinators = [ApplicationCoordinator]()
+    lazy var childCoordinators = [ApplicationCoordinator]()
+    
+    var completionHandler: (() -> ())?
     
     init(window: UIWindow) {
         self.window = window
     }
     
     func start() {
-        
+        window.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        window.makeKeyAndVisible()
     }
     
 }
