@@ -12,6 +12,7 @@ import AVFoundation
 class CollectionViewController: UICollectionViewController {
     
     var images = [UIImage]()
+    var currentImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,13 @@ class CollectionViewController: UICollectionViewController {
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         self.collectionView?.collectionViewLayout = layout
+        
+        if let
+            image = currentImage,
+            item = images.indexOf(image)
+        {
+            self.collectionView?.scrollToItemAtIndexPath(NSIndexPath(forItem: item, inSection: 0), atScrollPosition: .CenteredVertically, animated: false)
+        }
     }
     
     class func initialize(urls: [NSURL], completion: CollectionViewController -> ()) {
