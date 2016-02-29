@@ -98,15 +98,23 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
 private class Layout: UICollectionViewFlowLayout {
     
     override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
-        guard let collectionView = collectionView else { return super.targetContentOffsetForProposedContentOffset(proposedContentOffset) }
-        
+        guard let collectionView = collectionView else { return super.targetContentOffsetForProposedContentOffset(proposedContentOffset, withScrollingVelocity: velocity) }
         let halfHeight = collectionView.bounds.height / 2
         let proposedContentOffsetCenterY = proposedContentOffset.y + halfHeight
-        
-        let layoutAttributes = layoutAttributesForElementsInRect(collectionView.bounds)?.filter { $0.representedElementCategory == .Cell }
+        let layoutAttributes = layoutAttributesForElementsInRect(collectionView.bounds)
         let closest = layoutAttributes?.sort { abs($0.center.y - proposedContentOffsetCenterY) < abs($1.center.y - proposedContentOffsetCenterY) }.first ?? UICollectionViewLayoutAttributes()
-        
         return CGPoint(x: proposedContentOffset.x, y: closest.center.y - halfHeight)
+    }
+    
+    override func collectionViewContentSize() -> CGSize {
+        if let
+            collectionView = collectionView,
+            first = layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0)),
+            last = layoutAttributesForItemAtIndexPath(NSIndexPath(forItem: collectionView.numberOfItemsInSection(0) - 1, inSection: 0))
+        {
+            collectionView.contentInset = UIEdgeInsets(top: (collectionView.bounds.height / 2) - (first.bounds.height / 2), left: 0, bottom: (collectionView.bounds.height / 2) - (last.bounds.height / 2), right: 0)
+        }
+        return super.collectionViewContentSize()
     }
     
 }
