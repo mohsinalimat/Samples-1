@@ -32,6 +32,17 @@ class CollectionViewController: UICollectionViewController {
         self.collectionView?.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
     }
     
+    class func initialize(urls: [NSURL], completion: CollectionViewController -> ()) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+            let images = urls.flatMap { UIImage(data: NSData(contentsOfURL: $0)!) }
+            dispatch_async(dispatch_get_main_queue()) {
+                let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("CollectionViewControllerId") as! CollectionViewController
+                viewController.images = images
+                completion(viewController)
+            }
+        }
+    }
+    
 }
 
 // MARK: - UICollectionViewDataSource
