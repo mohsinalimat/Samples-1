@@ -109,6 +109,7 @@ private class Cell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = self.contentView.bounds
+        imageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         imageView.contentMode = .ScaleAspectFit
         self.contentView.addSubview(imageView)
         return imageView
