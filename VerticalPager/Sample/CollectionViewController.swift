@@ -99,12 +99,13 @@ extension CollectionViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Layout
 private class Layout: UICollectionViewFlowLayout {
     
-    override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    override func targetContentOffsetForProposedContentOffset(var proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         guard let collectionView = collectionView else { return super.targetContentOffsetForProposedContentOffset(proposedContentOffset, withScrollingVelocity: velocity) }
         let halfHeight = collectionView.bounds.height / 2
-        let proposedContentOffsetCenterY = proposedContentOffset.y + halfHeight
+        proposedContentOffset.y += halfHeight
+        proposedContentOffset.y += (velocity.y * halfHeight / 2)
         let layoutAttributes = layoutAttributesForElementsInRect(collectionView.bounds)
-        let closest = layoutAttributes?.sort { abs($0.center.y - proposedContentOffsetCenterY) < abs($1.center.y - proposedContentOffsetCenterY) }.first ?? UICollectionViewLayoutAttributes()
+        let closest = layoutAttributes?.sort { abs($0.center.y - proposedContentOffset.y) < abs($1.center.y - proposedContentOffset.y) }.first ?? UICollectionViewLayoutAttributes()
         return CGPoint(x: proposedContentOffset.x, y: closest.center.y - halfHeight)
     }
     
