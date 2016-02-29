@@ -103,10 +103,10 @@ private class Layout: UICollectionViewFlowLayout {
         guard let collectionView = collectionView else { return super.targetContentOffsetForProposedContentOffset(proposedContentOffset, withScrollingVelocity: velocity) }
         let halfHeight = collectionView.bounds.height / 2
         proposedContentOffset.y += halfHeight
-        proposedContentOffset.y += (velocity.y * halfHeight / 2)
+        proposedContentOffset.y += (velocity.y * halfHeight)
         let layoutAttributes = layoutAttributesForElementsInRect(collectionView.bounds)
         let closest = layoutAttributes?.sort { abs($0.center.y - proposedContentOffset.y) < abs($1.center.y - proposedContentOffset.y) }.first ?? UICollectionViewLayoutAttributes()
-        return CGPoint(x: proposedContentOffset.x, y: closest.center.y - halfHeight)
+        return CGPoint(x: proposedContentOffset.x, y: floor(closest.center.y - halfHeight))
     }
     
     override func collectionViewContentSize() -> CGSize {
