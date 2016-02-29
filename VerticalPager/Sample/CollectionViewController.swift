@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CollectionViewController: UICollectionViewController {
     
@@ -30,6 +31,11 @@ class CollectionViewController: UICollectionViewController {
         self.collectionView?.decelerationRate = UIScrollViewDecelerationRateFast
         self.collectionView?.showsVerticalScrollIndicator = false
         self.collectionView?.registerClass(Cell.self, forCellWithReuseIdentifier: "cell")
+        
+        let layout = Layout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        self.collectionView?.collectionViewLayout = layout
     }
     
     class func initialize(urls: [NSURL], completion: CollectionViewController -> ()) {
@@ -71,6 +77,32 @@ extension CollectionViewController {
     
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+extension CollectionViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return images[indexPath.item].size.scaleAspectFit(boundingSize: collectionView.bounds.size)
+    }
+    
+}
+
+// MARK: - Layout
+private class Layout: UICollectionViewFlowLayout {
+    
+    override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        guard let collectionView = collectionView else { return super.targetContentOffsetForProposedContentOffset(proposedContentOffset) }
+        
+        let halfHeight = collectionView.bounds.height / 2
+        let proposedContentOffsetCenterY = proposedContentOffset.y + halfHeight
+        
+        let layoutAttributes = layoutAttributesForElementsInRect(collectionView.bounds)?.filter { $0.representedElementCategory == .Cell }
+        let closest = layoutAttributes?.sort { abs($0.center.y - proposedContentOffsetCenterY) < abs($1.center.y - proposedContentOffsetCenterY) }.first ?? UICollectionViewLayoutAttributes()
+        
+        return CGPoint(x: proposedContentOffset.x, y: closest.center.y - halfHeight)
+    }
+    
+}
+
 // MARK: - Cell
 private class Cell: UICollectionViewCell {
     
@@ -81,5 +113,16 @@ private class Cell: UICollectionViewCell {
         self.contentView.addSubview(imageView)
         return imageView
     }()
+    
+}
+
+// MARK: - CGSize
+private extension CGSize {
+    
+    func scaleAspectFit(boundingSize size: CGSize) -> CGSize {
+        var rect = CGRect()
+        rect.size = size
+        return AVMakeRectWithAspectRatioInsideRect(self, rect).size
+    }
     
 }
