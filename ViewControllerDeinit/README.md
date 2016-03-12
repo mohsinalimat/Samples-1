@@ -1,3 +1,3 @@
 # ViewControllerDeinit
 
-Prints if UIViewController was deallocated.
+Logging view controller deinits.
