@@ -10,33 +10,32 @@ import UIKit
 
 class CircularProgressView: UIView {
     
-    private lazy var label: UILabel = { [unowned self] in
-        let label = UILabel()
-        label.frame = CGRectInset(self.bounds, 40, 40)
-        label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        label.textAlignment = .Center
-        self.addSubview(label)
-        
-        let shape = CAShapeLayer()
-        shape.fillColor = self.tintColor.CGColor
-        shape.path = UIBezierPath(ovalInRect: label.bounds).CGPath
-        label.layer.insertSublayer(shape, atIndex: 0)
-        
-        return label
+    private lazy var button: UIButton = { [unowned self] in
+        let button = UIButton(type: .Custom)
+        button.frame = CGRectInset(self.bounds, 20, 20)
+        button.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        button.userInteractionEnabled = false
+        button.titleLabel?.font = .boldSystemFontOfSize(18)
+        button.backgroundColor = self.tintColor
+        button.layer.cornerRadius = button.bounds.width / 2
+        button.layer.masksToBounds = true
+        self.addSubview(button)
+        return button
     }()
     
     private lazy var shape: CAShapeLayer = { [unowned self] in
         let shape = CAShapeLayer()
         shape.fillColor = UIColor.clearColor().CGColor
         shape.strokeColor = self.tintColor.CGColor
-        shape.lineWidth = 2
+        shape.lineCap = kCALineCapRound
+        shape.lineWidth = 3.5
         shape.path = self.path.CGPath
         self.layer.addSublayer(shape)
         return shape
     }()
     
     var startAngle: CGFloat = -CGFloat(M_PI_2)
-    var endAngle: CGFloat = CGFloat(M_PI) * 2
+    var endAngle: CGFloat = -CGFloat(M_PI_2) + CGFloat(M_PI) * 2
     var clockwise: Bool = true
     
     private var path: UIBezierPath {
@@ -55,25 +54,38 @@ class CircularProgressView: UIView {
     
     func drawCircleTrack() {
         let path = self.path
-        path.lineWidth = 1
-        UIColor.lightGrayColor().setStroke()
+        path.lineWidth = 2
+        UIColor(white: 0.895, alpha: 1).setStroke()
         path.stroke()
     }
     
-    func setProgress(progress: CGFloat, duration: CFTimeInterval) {
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.duration = duration
-        animation.toValue = progress
-        animation.removedOnCompletion = false
-        animation.fillMode = kCAFillModeForwards
-        shape.addAnimation(animation, forKey: "strokeEnd")
+    func setProgress(progress: CGFloat, duration: Int) {
+        let _ = shape
         
-        let duration = Int(duration)
-        label.text = "\(duration)"
-        Timer(duration: duration) { [weak self] elapsedTime in
-            let time = duration - elapsedTime
-            self?.label.text = "\(time)"
-        }.start()
+        button.setTitle("\(duration)", forState: .Normal)
+        
+        button.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        UIView.animateWithDuration(0.3, delay: 0, options: [.CurveLinear], animations: {
+            self.button.transform = CGAffineTransformIdentity
+        }, completion: { _ in
+            CATransaction.begin()
+            let animation = CABasicAnimation(keyPath: "strokeEnd")
+            animation.duration = CFTimeInterval(duration)
+            animation.toValue = progress
+            animation.removedOnCompletion = false
+            animation.fillMode = kCAFillModeForwards
+            CATransaction.setCompletionBlock {
+                UIView.animateWithDuration(0.3, delay: 0, options: [.CurveLinear], animations: {
+                    self.button.transform = CGAffineTransformMakeScale(0.01, 0.01)
+                }, completion: nil)
+            }
+            self.shape.addAnimation(animation, forKey: "strokeEnd")
+            CATransaction.commit()
+            
+            Timer(duration: duration) { [weak self] elapsedTime in
+                self?.button.setTitle("\(duration - elapsedTime)", forState: .Normal)
+            }.start()
+        })
     }
     
 }

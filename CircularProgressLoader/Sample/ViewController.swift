@@ -15,8 +15,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
-        circularProgressView.setProgress(0, duration: 4)
+        circularProgressView.setProgress(-0.01, duration: 4)
     }
 
     override func didReceiveMemoryWarning() {
