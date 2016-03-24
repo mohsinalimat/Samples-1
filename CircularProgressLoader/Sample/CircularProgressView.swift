@@ -45,16 +45,11 @@ class CircularProgressView: UIView {
         return shape
     }()
     
-    var startAngle: CGFloat = -CGFloat(M_PI_2)
-    var endAngle: CGFloat = -CGFloat(M_PI_2) + CGFloat(M_PI) * 2
-    var clockwise: Bool = true
-    
     private var path: UIBezierPath {
-        return UIBezierPath(arcCenter: boundsCenter, radius: boundsCenter.x - 1, startAngle: startAngle, endAngle: endAngle, clockwise: clockwise)
-    }
-    
-    private var boundsCenter: CGPoint {
-        return CGPoint(x: bounds.width / 2, y: bounds.height / 2)
+        let halfWidth = bounds.width / 2
+        let startAngle = -CGFloat(M_PI_2)
+        let endAngle = startAngle + CGFloat(M_PI) * 2
+        return UIBezierPath(arcCenter: CGPoint(x: halfWidth, y: halfWidth), radius: halfWidth - 1, startAngle: startAngle, endAngle: endAngle, clockwise: true)
     }
     
     override func drawRect(rect: CGRect) {
@@ -128,10 +123,10 @@ class CircularProgressView: UIView {
 
 class Timer {
     
-    var timer = NSTimer()
-    let duration: Int
-    var elapsedTime: Int = 0
-    var handler: (Int) -> ()
+    private var timer = NSTimer()
+    private let duration: Int
+    private var elapsedTime: Int = 0
+    private var handler: (Int) -> ()
     
     init(duration: Int, handler: (Int) -> ()) {
         self.duration = duration
@@ -150,7 +145,7 @@ class Timer {
         timer.invalidate()
     }
     
-    @objc func tick() {
+    @objc private func tick() {
         elapsedTime += 1
         handler(elapsedTime)
         if elapsedTime == duration {
