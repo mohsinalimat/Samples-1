@@ -45,6 +45,16 @@ class CircularProgressView: UIView {
         return shape
     }()
     
+    var title: String? {
+        get { return button.titleForState(.Normal) }
+        set { button.setTitle(newValue, forState: .Normal) }
+    }
+    
+    var image: UIImage? {
+        get { return button.imageForState(.Normal) }
+        set { button.setImage(newValue, forState: .Normal) }
+    }
+    
     private var path: UIBezierPath {
         let halfWidth = bounds.width / 2
         let startAngle = -CGFloat(M_PI_2)
@@ -61,7 +71,7 @@ class CircularProgressView: UIView {
     func setProgress(progress: CGFloat, duration: Int) {
         let _ = progressShape
         
-        button.setTitle("\(duration)", forState: .Normal)
+        title = "\(duration)"
         
         button.transform = CGAffineTransformMakeScale(0.001, 0.001)
         UIView.animateWithDuration(0.3, delay: 0, options: [.CurveLinear], animations: {
@@ -86,7 +96,7 @@ class CircularProgressView: UIView {
             CATransaction.commit()
             
             Timer(duration: duration) { [weak self] elapsedTime in
-                self?.button.setTitle("\(duration - elapsedTime)", forState: .Normal)
+                self?.title = "\(duration - elapsedTime)"
             }.start()
         })
     }
@@ -125,11 +135,13 @@ class Timer {
     
     private var timer = NSTimer()
     private let duration: Int
-    private var elapsedTime: Int = 0
+    private let timeInterval: Int
     private var handler: (Int) -> ()
+    private var elapsedTime: Int = 0
     
-    init(duration: Int, handler: (Int) -> ()) {
+    init(duration: Int, timeInterval: Int = 1, handler: (Int) -> ()) {
         self.duration = duration
+        self.timeInterval = timeInterval
         self.handler = handler
     }
     
@@ -138,7 +150,7 @@ class Timer {
     }
     
     func start() {
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(tick), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(timeInterval), target: self, selector: #selector(tick), userInfo: nil, repeats: true)
     }
     
     func stop() {
