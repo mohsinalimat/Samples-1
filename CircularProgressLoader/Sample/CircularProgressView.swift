@@ -23,13 +23,24 @@ class CircularProgressView: UIView {
         return button
     }()
     
-    private lazy var shape: CAShapeLayer = { [unowned self] in
+    private lazy var progressShape: CAShapeLayer = { [unowned self] in
         let shape = CAShapeLayer()
+        shape.frame = self.bounds
         shape.fillColor = UIColor.clearColor().CGColor
         shape.strokeColor = self.tintColor.CGColor
         shape.lineCap = kCALineCapRound
         shape.lineWidth = 3.5
         shape.path = self.path.CGPath
+        self.layer.addSublayer(shape)
+        return shape
+    }()
+    
+    private lazy var pulseShape: CAShapeLayer = { [unowned self] in
+        let shape = CAShapeLayer()
+        shape.frame = self.bounds
+        shape.fillColor = self.tintColor.CGColor
+        shape.path = UIBezierPath(ovalInRect: self.bounds).CGPath
+        self.addPulseAnimation(shape, duration: 1)
         self.layer.addSublayer(shape)
         return shape
     }()
@@ -52,22 +63,18 @@ class CircularProgressView: UIView {
         drawCircleTrack()
     }
     
-    func drawCircleTrack() {
-        let path = self.path
-        path.lineWidth = 2
-        UIColor(white: 0.895, alpha: 1).setStroke()
-        path.stroke()
-    }
-    
     func setProgress(progress: CGFloat, duration: Int) {
-        let _ = shape
+        let _ = progressShape
         
         button.setTitle("\(duration)", forState: .Normal)
         
-        button.transform = CGAffineTransformMakeScale(0.01, 0.01)
+        button.transform = CGAffineTransformMakeScale(0.001, 0.001)
         UIView.animateWithDuration(0.3, delay: 0, options: [.CurveLinear], animations: {
             self.button.transform = CGAffineTransformIdentity
         }, completion: { _ in
+            self.pulseShape.hidden = false
+            self.pulseShape.speed = 1
+            
             CATransaction.begin()
             let animation = CABasicAnimation(keyPath: "strokeEnd")
             animation.duration = CFTimeInterval(duration)
@@ -75,17 +82,48 @@ class CircularProgressView: UIView {
             animation.removedOnCompletion = false
             animation.fillMode = kCAFillModeForwards
             CATransaction.setCompletionBlock {
+                self.pulseShape.hidden = true
+                self.pulseShape.speed = 0
+                
                 UIView.animateWithDuration(0.3, delay: 0, options: [.CurveLinear], animations: {
-                    self.button.transform = CGAffineTransformMakeScale(0.01, 0.01)
+                    self.button.transform = CGAffineTransformMakeScale(0.001, 0.001)
                 }, completion: nil)
             }
-            self.shape.addAnimation(animation, forKey: "strokeEnd")
+            self.progressShape.addAnimation(animation, forKey: "strokeEnd")
             CATransaction.commit()
             
             Timer(duration: duration) { [weak self] elapsedTime in
                 self?.button.setTitle("\(duration - elapsedTime)", forState: .Normal)
             }.start()
         })
+    }
+    
+    private func drawCircleTrack() {
+        let path = self.path
+        path.lineWidth = 2
+        UIColor(white: 0.895, alpha: 1).setStroke()
+        path.stroke()
+    }
+    
+    private func addPulseAnimation(layer: CALayer, duration: Int) {
+        if true {
+            let animation = CABasicAnimation(keyPath: "transform.scale")
+            animation.duration = CFTimeInterval(duration)
+            animation.fromValue = 0.55
+            animation.toValue = 0.75
+            animation.repeatCount = FLT_MAX
+            animation.autoreverses = true
+            layer.addAnimation(animation, forKey: "transform.scale")
+        }
+        if true {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.duration = CFTimeInterval(duration)
+            animation.fromValue = 0.1
+            animation.toValue = 0.2
+            animation.repeatCount = FLT_MAX
+            animation.autoreverses = true
+            layer.addAnimation(animation, forKey: "opacity")
+        }
     }
     
 }
