@@ -73,7 +73,6 @@ class CircularProgressView: UIView {
             self.button.transform = CGAffineTransformIdentity
         }, completion: { _ in
             self.pulseShape.hidden = false
-            self.pulseShape.speed = 1
             
             CATransaction.begin()
             let animation = CABasicAnimation(keyPath: "strokeEnd")
@@ -83,7 +82,6 @@ class CircularProgressView: UIView {
             animation.fillMode = kCAFillModeForwards
             CATransaction.setCompletionBlock {
                 self.pulseShape.hidden = true
-                self.pulseShape.speed = 0
                 
                 UIView.animateWithDuration(0.3, delay: 0, options: [.CurveLinear], animations: {
                     self.button.transform = CGAffineTransformMakeScale(0.001, 0.001)
