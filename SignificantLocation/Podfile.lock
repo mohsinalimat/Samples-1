@@ -1,0 +1,20 @@
+PODS:
+  - SwiftLocation (0.2.0)
+
+DEPENDENCIES:
+  - SwiftLocation (from `https://github.com/efremidze/SwiftLocation.git`, branch `hotfix/significant-location`)
+
+EXTERNAL SOURCES:
+  SwiftLocation:
+    :branch: hotfix/significant-location
+    :git: https://github.com/efremidze/SwiftLocation.git
+
+CHECKOUT OPTIONS:
+  SwiftLocation:
+    :commit: 8e6a110e3f18d9a5ded54f273f20205dde03f605
+    :git: https://github.com/efremidze/SwiftLocation.git
+
+SPEC CHECKSUMS:
+  SwiftLocation: ea78ae4a822581bde7379d98c8513273723c8840
+
+COCOAPODS: 0.39.0.beta.3

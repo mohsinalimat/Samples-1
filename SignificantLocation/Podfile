@@ -1,0 +1,3 @@
+use_frameworks!
+
+pod 'SwiftLocation', :git => 'https://github.com/efremidze/SwiftLocation.git', :branch => 'hotfix/significant-location'
