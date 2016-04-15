@@ -44,23 +44,7 @@ private extension ViewController {
     
 }
 
-// MARK: - NEW
-
-protocol Liquid {
-    var radius: CGFloat { get }
-}
-
-private extension ViewController {
-    
-//    typealias LiquidView = protocol<T: Liquid where T: UIView>
-    
-    func foo<T: Liquid where T: UIView>(view: T) {
-        view.radius
-    }
-    
-}
-
-// MARK: - OLD
+// MARK: -
 
 class SimpleCircleLiquidEngine {
     
