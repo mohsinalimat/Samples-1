@@ -3,6 +3,8 @@
 protocol Food {}
 
 struct Grass: Food {}
+struct Meat: Food {}
+struct Veggies: Food {}
 
 protocol Animal {
     init()
