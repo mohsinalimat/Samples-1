@@ -12,6 +12,11 @@
 		8B10ABE31CB6FCB10078B57B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B10ABE11CB6FCB10078B57B /* Main.storyboard */; };
 		8B10ABE51CB6FCB10078B57B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B10ABE41CB6FCB10078B57B /* Assets.xcassets */; };
 		8B10ABE81CB6FCB10078B57B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B10ABE61CB6FCB10078B57B /* LaunchScreen.storyboard */; };
+		8BB465411CC4A90F0060BD60 /* SimpleCircleLiquidEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB465401CC4A90F0060BD60 /* SimpleCircleLiquidEngine.swift */; };
+		8BB465431CC4AAC80060BD60 /* LiquittableCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB465421CC4AAC80060BD60 /* LiquittableCircle.swift */; };
+		8BB465451CC4AB490060BD60 /* LiquidUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB465441CC4AB490060BD60 /* LiquidUtil.swift */; };
+		8BB465481CC4AB760060BD60 /* CGPointEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB465461CC4AB760060BD60 /* CGPointEx.swift */; };
+		8BB465491CC4AB760060BD60 /* CGRectEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB465471CC4AB760060BD60 /* CGRectEx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		8B10ABE41CB6FCB10078B57B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B10ABE71CB6FCB10078B57B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B10ABE91CB6FCB10078B57B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BB465401CC4A90F0060BD60 /* SimpleCircleLiquidEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleCircleLiquidEngine.swift; sourceTree = "<group>"; };
+		8BB465421CC4AAC80060BD60 /* LiquittableCircle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquittableCircle.swift; sourceTree = "<group>"; };
+		8BB465441CC4AB490060BD60 /* LiquidUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiquidUtil.swift; sourceTree = "<group>"; };
+		8BB465461CC4AB760060BD60 /* CGPointEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPointEx.swift; sourceTree = "<group>"; };
+		8BB465471CC4AB760060BD60 /* CGRectEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectEx.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +66,25 @@
 			children = (
 				8B10ABDD1CB6FCB10078B57B /* AppDelegate.swift */,
 				8B10ABDF1CB6FCB10078B57B /* ViewController.swift */,
+				8BB4653F1CC4A90F0060BD60 /* Libraries */,
 				8B10ABE11CB6FCB10078B57B /* Main.storyboard */,
 				8B10ABE41CB6FCB10078B57B /* Assets.xcassets */,
 				8B10ABE61CB6FCB10078B57B /* LaunchScreen.storyboard */,
 				8B10ABE91CB6FCB10078B57B /* Info.plist */,
 			);
 			path = Sample;
+			sourceTree = "<group>";
+		};
+		8BB4653F1CC4A90F0060BD60 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				8BB465461CC4AB760060BD60 /* CGPointEx.swift */,
+				8BB465471CC4AB760060BD60 /* CGRectEx.swift */,
+				8BB465441CC4AB490060BD60 /* LiquidUtil.swift */,
+				8BB465421CC4AAC80060BD60 /* LiquittableCircle.swift */,
+				8BB465401CC4A90F0060BD60 /* SimpleCircleLiquidEngine.swift */,
+			);
+			path = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +158,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BB465431CC4AAC80060BD60 /* LiquittableCircle.swift in Sources */,
 				8B10ABE01CB6FCB10078B57B /* ViewController.swift in Sources */,
+				8BB465451CC4AB490060BD60 /* LiquidUtil.swift in Sources */,
+				8BB465481CC4AB760060BD60 /* CGPointEx.swift in Sources */,
 				8B10ABDE1CB6FCB10078B57B /* AppDelegate.swift in Sources */,
+				8BB465411CC4A90F0060BD60 /* SimpleCircleLiquidEngine.swift in Sources */,
+				8BB465491CC4AB760060BD60 /* CGRectEx.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +316,7 @@
 				8B10ABEE1CB6FCB10078B57B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
