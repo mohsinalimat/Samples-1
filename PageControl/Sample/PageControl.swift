@@ -38,7 +38,6 @@ public class PageControl: UIControl {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clearColor()
-//        collectionView.allowsSelection = false
         collectionView.scrollEnabled = false
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -70,7 +69,7 @@ public class PageControl: UIControl {
         self.backgroundColor = .clearColor()
         
         indicatorSize = CGSize(width: 7, height: 7)
-        sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
     }
     
 }
@@ -94,7 +93,11 @@ extension PageControl: UICollectionViewDataSource {
 extension PageControl: UICollectionViewDelegate {
     
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        (cell as? Cell)?.tintColor = pageIndicatorTintColor
+        guard let cell = cell as? Cell else { return }
+        cell.tintColor = pageIndicatorTintColor
+        cell.selectedTintColor = currentPageIndicatorTintColor
+        cell.highlightedTintColor = pageIndicatorTintColor?.colorWithAlphaComponent(0.2)
+        cell.circleShape.fillColor = UIColor.clearColor().CGColor
     }
     
 }
@@ -105,16 +108,64 @@ class Cell: UICollectionViewCell {
     lazy var circleShape: CAShapeLayer = { [unowned self] in
         let shape = CAShapeLayer()
         shape.frame = self.bounds
-        shape.fillColor = self.tintColor.CGColor
+        shape.fillColor = self.tintColor?.CGColor
+        shape.strokeColor = self.tintColor?.CGColor
         shape.path = UIBezierPath(ovalInRect: self.bounds).CGPath
         self.layer.addSublayer(shape)
         return shape
     }()
     
-    override var tintColor: UIColor! {
+    override var tintColor: UIColor? {
         didSet {
-            circleShape.fillColor = tintColor.CGColor
+            circleShape.fillColor = tintColor?.CGColor
+            circleShape.strokeColor = tintColor?.CGColor
         }
+    }
+    
+    var selectedTintColor: UIColor?
+    var highlightedTintColor: UIColor?
+    
+    override var selected: Bool {
+        didSet {
+            if selected == oldValue { return }
+            setSelected(selected, animated: true)
+        }
+    }
+    
+    override var highlighted: Bool {
+        didSet {
+            if highlighted == oldValue { return }
+            circleShape.fillColor = highlighted ? highlightedTintColor?.CGColor : tintColor?.CGColor
+        }
+    }
+    
+    func setSelected(selected: Bool, animated: Bool) {
+        if animated {
+            _setSelected(selected, duration: 1)
+        } else {
+            _setSelected(selected, duration: 0)
+        }
+    }
+    
+    func _setSelected(selected: Bool, duration: NSTimeInterval) {
+        func scaleAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "transform.scale")
+            animation.toValue = selected ? 1.5 : 1
+            return animation
+        }
+        
+        func fillColorAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "fillColor")
+            animation.toValue = (selected ? selectedTintColor : tintColor)?.CGColor
+            return animation
+        }
+        
+        let group = CAAnimationGroup()
+        group.duration = CFTimeInterval(duration)
+        group.removedOnCompletion = false
+        group.fillMode = kCAFillModeBoth
+        group.animations = [scaleAnimation(), fillColorAnimation()]
+        circleShape.addAnimation(group, forKey: "animations")
     }
     
 }
