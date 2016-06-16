@@ -141,7 +141,7 @@ class Cell: UICollectionViewCell {
     
     func setSelected(selected: Bool, animated: Bool) {
         if animated {
-            _setSelected(selected, duration: 1)
+            _setSelected(selected, duration: 0.25)
         } else {
             _setSelected(selected, duration: 0)
         }
@@ -150,12 +150,21 @@ class Cell: UICollectionViewCell {
     func _setSelected(selected: Bool, duration: NSTimeInterval) {
         func scaleAnimation() -> CAAnimation {
             let animation = CABasicAnimation(keyPath: "transform.scale")
+            animation.fromValue = (circleShape.presentationLayer() as? CALayer)?.valueForKeyPath("transform.scale")
             animation.toValue = selected ? 1.5 : 1
             return animation
         }
         
         func fillColorAnimation() -> CAAnimation {
             let animation = CABasicAnimation(keyPath: "fillColor")
+            animation.fromValue = (circleShape.presentationLayer() as? CALayer)?.valueForKeyPath("fillColor")
+            animation.toValue = (selected ? selectedTintColor : tintColor)?.CGColor
+            return animation
+        }
+        
+        func strokeColorAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "strokeColor")
+            animation.fromValue = (circleShape.presentationLayer() as? CALayer)?.valueForKeyPath("strokeColor")
             animation.toValue = (selected ? selectedTintColor : tintColor)?.CGColor
             return animation
         }
@@ -163,8 +172,8 @@ class Cell: UICollectionViewCell {
         let group = CAAnimationGroup()
         group.duration = CFTimeInterval(duration)
         group.removedOnCompletion = false
-        group.fillMode = kCAFillModeBoth
-        group.animations = [scaleAnimation(), fillColorAnimation()]
+        group.fillMode = kCAFillModeForwards
+        group.animations = [scaleAnimation(), fillColorAnimation(), strokeColorAnimation()]
         circleShape.addAnimation(group, forKey: "animations")
     }
     
