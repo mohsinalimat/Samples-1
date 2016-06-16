@@ -15,7 +15,7 @@ class ViewController: UIViewController {
             pageControl.sections = 4
             pageControl.pages = { _ in 4 }
             pageControl.pageIndicatorTintColor = .whiteColor()
-            pageControl.currentPageIndicatorTintColor = .blueColor()
+            pageControl.currentPageIndicatorTintColor = .orangeColor()
         }
     }
     

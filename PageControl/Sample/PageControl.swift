@@ -26,26 +26,25 @@ public class PageControl: UIControl {
         set { layout.itemSize = newValue }
     }
     
-    public var sectionInset: UIEdgeInsets {
-        get { return layout.sectionInset }
-        set { layout.sectionInset = newValue }
+    public var indicatorSpacing: CGFloat {
+        get { return layout.minimumLineSpacing }
+        set { layout.minimumLineSpacing = newValue }
+    }
+    
+    public var sectionSpacing: CGFloat {
+        get { return layout.sectionInset.top }
+        set { layout.sectionInset = UIEdgeInsets(top: newValue, left: newValue, bottom: newValue, right: newValue) }
     }
     
     lazy var collectionView: UICollectionView = { [unowned self] in
-        let layout = UICollectionViewFlowLayout()
-//        layout.minimumLineSpacing = 0
-//        layout.minimumInteritemSpacing = 0
-        let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let collectionView = UICollectionView(frame: self.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         collectionView.backgroundColor = .clearColor()
         collectionView.scrollEnabled = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.registerClass(Cell.self, forCellWithReuseIdentifier: String(Cell))
         self.addSubview(collectionView)
-        let views = ["collectionView": collectionView]
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[collectionView]|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView]|", options: [], metrics: nil, views: views))
         return collectionView
     }()
     
@@ -68,8 +67,9 @@ public class PageControl: UIControl {
     func commonInit() {
         self.backgroundColor = .clearColor()
         
-        indicatorSize = CGSize(width: 7, height: 7)
-        sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        indicatorSize = CGSize(width: 16, height: 16)
+        indicatorSpacing = 0
+        sectionSpacing = 5
     }
     
 }
@@ -96,7 +96,6 @@ extension PageControl: UICollectionViewDelegate {
         guard let cell = cell as? Cell else { return }
         cell.tintColor = pageIndicatorTintColor
         cell.selectedTintColor = currentPageIndicatorTintColor
-        cell.highlightedTintColor = pageIndicatorTintColor?.colorWithAlphaComponent(0.2)
         cell.circleShape.fillColor = UIColor.clearColor().CGColor
     }
     
@@ -110,7 +109,7 @@ class Cell: UICollectionViewCell {
         shape.frame = self.bounds
         shape.fillColor = self.tintColor?.CGColor
         shape.strokeColor = self.tintColor?.CGColor
-        shape.path = UIBezierPath(ovalInRect: self.bounds).CGPath
+        shape.path = UIBezierPath(ovalInRect: CGRectInset(self.bounds, 5, 5)).CGPath
         self.layer.addSublayer(shape)
         return shape
     }()
@@ -123,48 +122,36 @@ class Cell: UICollectionViewCell {
     }
     
     var selectedTintColor: UIColor?
-    var highlightedTintColor: UIColor?
     
     override var selected: Bool {
         didSet {
             if selected == oldValue { return }
-            setSelected(selected, animated: true)
+            setSelected(selected, duration: 0.25)
         }
     }
     
     override var highlighted: Bool {
         didSet {
             if highlighted == oldValue { return }
-            circleShape.fillColor = highlighted ? highlightedTintColor?.CGColor : tintColor?.CGColor
+            circleShape.opacity = highlighted ? 0.2 : 1
         }
     }
     
-    func setSelected(selected: Bool, animated: Bool) {
-        if animated {
-            _setSelected(selected, duration: 0.25)
-        } else {
-            _setSelected(selected, duration: 0)
-        }
-    }
-    
-    func _setSelected(selected: Bool, duration: NSTimeInterval) {
+    func setSelected(selected: Bool, duration: NSTimeInterval) {
         func scaleAnimation() -> CAAnimation {
-            let animation = CABasicAnimation(keyPath: "transform.scale")
-            animation.fromValue = (circleShape.presentationLayer() as? CALayer)?.valueForKeyPath("transform.scale")
+            let animation = CABasicAnimation(keyPath: "transform.scale", layer: circleShape)
             animation.toValue = selected ? 1.5 : 1
             return animation
         }
         
         func fillColorAnimation() -> CAAnimation {
-            let animation = CABasicAnimation(keyPath: "fillColor")
-            animation.fromValue = (circleShape.presentationLayer() as? CALayer)?.valueForKeyPath("fillColor")
+            let animation = CABasicAnimation(keyPath: "fillColor", layer: circleShape)
             animation.toValue = (selected ? selectedTintColor : tintColor)?.CGColor
             return animation
         }
         
         func strokeColorAnimation() -> CAAnimation {
-            let animation = CABasicAnimation(keyPath: "strokeColor")
-            animation.fromValue = (circleShape.presentationLayer() as? CALayer)?.valueForKeyPath("strokeColor")
+            let animation = CABasicAnimation(keyPath: "strokeColor", layer: circleShape)
             animation.toValue = (selected ? selectedTintColor : tintColor)?.CGColor
             return animation
         }
@@ -175,6 +162,15 @@ class Cell: UICollectionViewCell {
         group.fillMode = kCAFillModeForwards
         group.animations = [scaleAnimation(), fillColorAnimation(), strokeColorAnimation()]
         circleShape.addAnimation(group, forKey: "animations")
+    }
+    
+}
+
+extension CABasicAnimation {
+    
+    convenience init(keyPath path: String, layer: CALayer) {
+        self.init(keyPath: path)
+        self.fromValue = (layer.presentationLayer() as? CALayer)?.valueForKeyPath(path)
     }
     
 }
