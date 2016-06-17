@@ -16,7 +16,12 @@ class ViewController: UIViewController {
             pageControl.pages = { _ in 4 }
             pageControl.pageIndicatorTintColor = .whiteColor()
             pageControl.currentPageIndicatorTintColor = .orangeColor()
+            pageControl.addTarget(self, action: #selector(tapped), forControlEvents: .ValueChanged)
         }
+    }
+    
+    @IBAction func tapped() {
+        print(pageControl.currentPage)
     }
     
 }

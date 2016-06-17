@@ -9,24 +9,27 @@
 import UIKit
 
 //UIPageControl
-
 public class PageControl: UIControl {
     
     public typealias Section = Int
     
     public var sections: Int = 0
     public var pages: (Section -> Int) = { _ in 0 }
-    public var currentPage: (Section, Int) = (0, 0)
+    public var currentPage: (Section, Int) = (0, 0) {
+        didSet {
+            collectionView.selectItemAtIndexPath(NSIndexPath(forItem: currentPage.1, inSection: currentPage.0), animated: false, scrollPosition: .None)
+        }
+    }
     
-    public var pageIndicatorTintColor: UIColor? = UIColor(white: 1, alpha: 0.5)
-    public var currentPageIndicatorTintColor: UIColor? = .whiteColor()
+    public var pageIndicatorTintColor: UIColor?
+    public var currentPageIndicatorTintColor: UIColor?
     
-    public var indicatorSize: CGSize {
+    public var pageIndicatorSize: CGSize {
         get { return layout.itemSize }
         set { layout.itemSize = newValue }
     }
     
-    public var indicatorSpacing: CGFloat {
+    public var pageIndicatorSpacing: CGFloat {
         get { return layout.minimumLineSpacing }
         set { layout.minimumLineSpacing = newValue }
     }
@@ -67,13 +70,17 @@ public class PageControl: UIControl {
     func commonInit() {
         self.backgroundColor = .clearColor()
         
-        indicatorSize = CGSize(width: 16, height: 16)
-        indicatorSpacing = 0
+        pageIndicatorTintColor = UIColor(white: 1, alpha: 0.5)
+        currentPageIndicatorTintColor = .whiteColor()
+        
+        pageIndicatorSize = CGSize(width: 16, height: 16)
+        pageIndicatorSpacing = 0
         sectionSpacing = 5
     }
     
 }
 
+// MARK: - UICollectionViewDataSource
 extension PageControl: UICollectionViewDataSource {
     
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -90,6 +97,7 @@ extension PageControl: UICollectionViewDataSource {
     
 }
 
+// MARK: - UICollectionViewDelegate
 extension PageControl: UICollectionViewDelegate {
     
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
@@ -97,6 +105,11 @@ extension PageControl: UICollectionViewDelegate {
         cell.tintColor = pageIndicatorTintColor
         cell.selectedTintColor = currentPageIndicatorTintColor
         cell.circleShape.fillColor = UIColor.clearColor().CGColor
+    }
+    
+    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        currentPage = (indexPath.section, indexPath.item)
+        sendActionsForControlEvents(.ValueChanged)
     }
     
 }
@@ -126,7 +139,7 @@ class Cell: UICollectionViewCell {
     override var selected: Bool {
         didSet {
             if selected == oldValue { return }
-            setSelected(selected, duration: 0.25)
+            setSelected(selected, animated: true)
         }
     }
     
@@ -137,7 +150,9 @@ class Cell: UICollectionViewCell {
         }
     }
     
-    func setSelected(selected: Bool, duration: NSTimeInterval) {
+    var selectedAnimationDuration: NSTimeInterval = 0.25
+    
+    func setSelected(selected: Bool, animated: Bool) {
         func scaleAnimation() -> CAAnimation {
             let animation = CABasicAnimation(keyPath: "transform.scale", layer: circleShape)
             animation.toValue = selected ? 1.5 : 1
@@ -157,7 +172,7 @@ class Cell: UICollectionViewCell {
         }
         
         let group = CAAnimationGroup()
-        group.duration = CFTimeInterval(duration)
+        group.duration = animated ? CFTimeInterval(selectedAnimationDuration) : 0
         group.removedOnCompletion = false
         group.fillMode = kCAFillModeForwards
         group.animations = [scaleAnimation(), fillColorAnimation(), strokeColorAnimation()]
@@ -166,7 +181,8 @@ class Cell: UICollectionViewCell {
     
 }
 
-extension CABasicAnimation {
+// MARK: - CABasicAnimation
+private extension CABasicAnimation {
     
     convenience init(keyPath path: String, layer: CALayer) {
         self.init(keyPath: path)
