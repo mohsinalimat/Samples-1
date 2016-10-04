@@ -1,0 +1,6 @@
+use_frameworks!
+
+target 'ImagePicker'
+
+pod 'Alamofire', '~> 3.5'
+pod 'FBSDKCoreKit', '~> 4.15'
