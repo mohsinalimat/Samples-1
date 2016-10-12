@@ -14,27 +14,23 @@ class FlipView: UIView {
     private var bottomHalf: UIView?
     
     func animate(toString string: String, completion: @escaping () -> ()) {
-        let view = View(frame: self.bounds)
+        let view = UILabel(frame: self.bounds)
         view.backgroundColor = .blue
         view.layer.cornerRadius = 4
-        view.textLayer.string = string
-        view.textLayer.alignmentMode = kCAAlignmentCenter
-        self.addSubview(view)
+        view.text = string
+        view.textColor = .white
+        view.textAlignment = .center
+        view.font = .boldSystemFont(ofSize: 100)
+        self.insertSubview(view, at: 0)
         
 //        let snapshotView = view.snapshotView(afterScreenUpdates: true)! // doesn't work in xcode 8
-        let snapshotView = view.snapshotView()
-//        view.removeFromSuperview()
-        self.addSubview(snapshotView)
         
-//        let nextTopHalf = snapshotView.topHalf()
-//        let nextBottomHalf = snapshotView.bottomHalf()
-//        if let topHalf = topHalf, let bottomHalf = bottomHalf {
-//            self.insertSubview(nextTopHalf, belowSubview: topHalf)
-//            self.insertSubview(nextBottomHalf, belowSubview: bottomHalf)
-//        } else {
-//            self.addSubview(nextTopHalf)
-//            self.addSubview(nextBottomHalf)
-//        }
+        let nextTopHalf = view.topHalf()
+        let nextBottomHalf = view.bottomHalf()
+        self.insertSubview(nextTopHalf, at: 0)
+        self.insertSubview(nextBottomHalf, at: 0)
+        
+        view.removeFromSuperview()
         
 //        UIView.animate(withDuration: 1, animations: { [weak self] in
 //            var transform = CATransform3DIdentity
@@ -52,48 +48,42 @@ class FlipView: UIView {
     
 }
 
-private class View: UIView {
-    
-    var textLayer: CATextLayer {
-        return layer as! CATextLayer
-    }
-    
-    override class var layerClass: AnyClass {
-        return CATextLayer.self
-    }
-    
-}
-
 private extension UIView {
     
     func topHalf() -> UIView {
         var frame = self.bounds
         frame.size.height /= 2
-        let view = resizableSnapshotView(from: frame, afterScreenUpdates: false, withCapInsets: UIEdgeInsets())!
-        view.isUserInteractionEnabled = false
-        return view
+        return snapshotView(from: frame)
     }
     
     func bottomHalf() -> UIView {
         var frame = self.bounds
         frame.size.height /= 2
         frame.origin.y = frame.height
-        let view = resizableSnapshotView(from: frame, afterScreenUpdates: false, withCapInsets: UIEdgeInsets())!
-        view.frame.origin.y += frame.height
-        view.isUserInteractionEnabled = false
+        let view = snapshotView(from: frame)
+        view.frame.origin.y = frame.height
         return view
     }
     
-    func snapshotImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
-        drawHierarchy(in: bounds, afterScreenUpdates: false)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return image!
+    func snapshotView(from rect: CGRect) -> UIView {
+        return UIImageView(image: snapshotImage(from: rect))
     }
     
-    func snapshotView() -> UIView {
-        return UIImageView(image: snapshotImage())
+    func snapshotImage(from rect: CGRect) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        let cgImage = image.cgImage!.cropping(to: rect.scale(scale: image.scale))!
+        return UIImage(cgImage: cgImage, scale: image.scale, orientation: .up)
+    }
+    
+}
+
+private extension CGRect {
+    
+    func scale(scale: CGFloat) -> CGRect {
+        return CGRect(x: minX * scale, y: minY * scale, width: width * scale, height: height * scale)
     }
     
 }
