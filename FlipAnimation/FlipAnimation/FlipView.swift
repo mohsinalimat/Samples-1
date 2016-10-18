@@ -13,24 +13,45 @@ class FlipView: UIView {
     private var topHalf: UIView?
     private var bottomHalf: UIView?
     
-    func animate(toString string: String, completion: @escaping () -> ()) {
+    lazy var view: UIView = { [unowned self] in
         let view = UILabel(frame: self.bounds)
         view.backgroundColor = .blue
-        view.layer.cornerRadius = 4
-        view.text = string
+        view.text = "0"
         view.textColor = .white
         view.textAlignment = .center
         view.font = .boldSystemFont(ofSize: 100)
-        self.insertSubview(view, at: 0)
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
+        self.addSubview(view)
+        return view
+    }()
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
         
-//        let snapshotView = view.snapshotView(afterScreenUpdates: true)! // doesn't work in xcode 8
+        commonInit()
+    }
+    
+    func commonInit() {
+        let _ = view
+    }
+    
+    func animate(toString string: String, completion: @escaping () -> ()) {
+//        self.setNeedsLayout()
+//        self.layoutIfNeeded()
         
-        let nextTopHalf = view.topHalf()
-        let nextBottomHalf = view.bottomHalf()
-        self.insertSubview(nextTopHalf, at: 0)
-        self.insertSubview(nextBottomHalf, at: 0)
+//        let snapshotView = view.snapshotView(afterScreenUpdates: false)!
+//        let frame = view.bounds
+//        let snapshot = snapshotView.resizableSnapshotView(from: frame, afterScreenUpdates: false, withCapInsets: UIEdgeInsets())!
+//        snapshot.frame = frame
+//        self.addSubview(snapshot)
         
-        view.removeFromSuperview()
+//        let nextTopHalf = view.topHalf()
+//        let nextBottomHalf = view.bottomHalf()
+//        self.insertSubview(nextTopHalf, at: 0)
+//        self.insertSubview(nextBottomHalf, at: 0)
+        
+//        view.removeFromSuperview()
         
 //        UIView.animate(withDuration: 1, animations: { [weak self] in
 //            var transform = CATransform3DIdentity

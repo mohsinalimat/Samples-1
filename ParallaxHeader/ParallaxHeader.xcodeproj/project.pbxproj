@@ -7,27 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8B5885301DAE03DB00CD4721 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58852F1DAE03DB00CD4721 /* AppDelegate.swift */; };
-		8B5885321DAE03DB00CD4721 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5885311DAE03DB00CD4721 /* ViewController.swift */; };
-		8B5885351DAE03DB00CD4721 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5885331DAE03DB00CD4721 /* Main.storyboard */; };
-		8B5885371DAE03DB00CD4721 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B5885361DAE03DB00CD4721 /* Assets.xcassets */; };
-		8B58853A1DAE03DB00CD4721 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5885381DAE03DB00CD4721 /* LaunchScreen.storyboard */; };
-		8B5885421DAE129300CD4721 /* FlipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5885411DAE129300CD4721 /* FlipView.swift */; };
+		8B130DDA1DB5822700E379BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B130DD91DB5822700E379BB /* AppDelegate.swift */; };
+		8B130DDC1DB5822700E379BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B130DDB1DB5822700E379BB /* ViewController.swift */; };
+		8B130DDF1DB5822700E379BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B130DDD1DB5822700E379BB /* Main.storyboard */; };
+		8B130DE11DB5822700E379BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B130DE01DB5822700E379BB /* Assets.xcassets */; };
+		8B130DE41DB5822700E379BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B130DE21DB5822700E379BB /* LaunchScreen.storyboard */; };
+		8B130DED1DB582BA00E379BB /* ParallaxHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B130DEC1DB582BA00E379BB /* ParallaxHeader.swift */; };
+		8B97BE451DB6C48A00227FB1 /* StarshipHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8B58852C1DAE03DB00CD4721 /* FlipAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlipAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B58852F1DAE03DB00CD4721 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8B5885311DAE03DB00CD4721 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8B5885341DAE03DB00CD4721 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8B5885361DAE03DB00CD4721 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8B5885391DAE03DB00CD4721 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8B58853B1DAE03DB00CD4721 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B5885411DAE129300CD4721 /* FlipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlipView.swift; sourceTree = "<group>"; };
+		8B130DD61DB5822700E379BB /* ParallaxHeader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParallaxHeader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B130DD91DB5822700E379BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8B130DDB1DB5822700E379BB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8B130DDE1DB5822700E379BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8B130DE01DB5822700E379BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8B130DE31DB5822700E379BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8B130DE51DB5822700E379BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B130DEC1DB582BA00E379BB /* ParallaxHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParallaxHeader.swift; path = Sources/ParallaxHeader.swift; sourceTree = "<group>"; };
+		8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarshipHeader.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8B5885291DAE03DB00CD4721 /* Frameworks */ = {
+		8B130DD31DB5822700E379BB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,74 +39,83 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8B5885231DAE03DB00CD4721 = {
+		8B130DCD1DB5822700E379BB = {
 			isa = PBXGroup;
 			children = (
-				8B58852E1DAE03DB00CD4721 /* FlipAnimation */,
-				8B58852D1DAE03DB00CD4721 /* Products */,
+				8B130DEB1DB5828D00E379BB /* ParallaxHeader */,
+				8B130DD81DB5822700E379BB /* Example */,
+				8B130DD71DB5822700E379BB /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		8B58852D1DAE03DB00CD4721 /* Products */ = {
+		8B130DD71DB5822700E379BB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8B58852C1DAE03DB00CD4721 /* FlipAnimation.app */,
+				8B130DD61DB5822700E379BB /* ParallaxHeader.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8B58852E1DAE03DB00CD4721 /* FlipAnimation */ = {
+		8B130DD81DB5822700E379BB /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				8B58852F1DAE03DB00CD4721 /* AppDelegate.swift */,
-				8B5885311DAE03DB00CD4721 /* ViewController.swift */,
-				8B5885411DAE129300CD4721 /* FlipView.swift */,
-				8B5885331DAE03DB00CD4721 /* Main.storyboard */,
-				8B5885361DAE03DB00CD4721 /* Assets.xcassets */,
-				8B5885381DAE03DB00CD4721 /* LaunchScreen.storyboard */,
-				8B58853B1DAE03DB00CD4721 /* Info.plist */,
+				8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */,
+				8B130DD91DB5822700E379BB /* AppDelegate.swift */,
+				8B130DDB1DB5822700E379BB /* ViewController.swift */,
+				8B130DDD1DB5822700E379BB /* Main.storyboard */,
+				8B130DE01DB5822700E379BB /* Assets.xcassets */,
+				8B130DE21DB5822700E379BB /* LaunchScreen.storyboard */,
+				8B130DE51DB5822700E379BB /* Info.plist */,
 			);
-			path = FlipAnimation;
+			name = Example;
+			path = ParallaxHeader;
+			sourceTree = "<group>";
+		};
+		8B130DEB1DB5828D00E379BB /* ParallaxHeader */ = {
+			isa = PBXGroup;
+			children = (
+				8B130DEC1DB582BA00E379BB /* ParallaxHeader.swift */,
+			);
+			name = ParallaxHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8B58852B1DAE03DB00CD4721 /* FlipAnimation */ = {
+		8B130DD51DB5822700E379BB /* ParallaxHeader */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8B58853E1DAE03DB00CD4721 /* Build configuration list for PBXNativeTarget "FlipAnimation" */;
+			buildConfigurationList = 8B130DE81DB5822700E379BB /* Build configuration list for PBXNativeTarget "ParallaxHeader" */;
 			buildPhases = (
-				8B5885281DAE03DB00CD4721 /* Sources */,
-				8B5885291DAE03DB00CD4721 /* Frameworks */,
-				8B58852A1DAE03DB00CD4721 /* Resources */,
+				8B130DD21DB5822700E379BB /* Sources */,
+				8B130DD31DB5822700E379BB /* Frameworks */,
+				8B130DD41DB5822700E379BB /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = FlipAnimation;
-			productName = FlipAnimation;
-			productReference = 8B58852C1DAE03DB00CD4721 /* FlipAnimation.app */;
+			name = ParallaxHeader;
+			productName = ParallaxHeader;
+			productReference = 8B130DD61DB5822700E379BB /* ParallaxHeader.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8B5885241DAE03DB00CD4721 /* Project object */ = {
+		8B130DCE1DB5822700E379BB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Lasha Efremidze";
 				TargetAttributes = {
-					8B58852B1DAE03DB00CD4721 = {
+					8B130DD51DB5822700E379BB = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = CK4ZXKX8S5;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 8B5885271DAE03DB00CD4721 /* Build configuration list for PBXProject "FlipAnimation" */;
+			buildConfigurationList = 8B130DD11DB5822700E379BB /* Build configuration list for PBXProject "ParallaxHeader" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -112,55 +123,56 @@
 				en,
 				Base,
 			);
-			mainGroup = 8B5885231DAE03DB00CD4721;
-			productRefGroup = 8B58852D1DAE03DB00CD4721 /* Products */;
+			mainGroup = 8B130DCD1DB5822700E379BB;
+			productRefGroup = 8B130DD71DB5822700E379BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8B58852B1DAE03DB00CD4721 /* FlipAnimation */,
+				8B130DD51DB5822700E379BB /* ParallaxHeader */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8B58852A1DAE03DB00CD4721 /* Resources */ = {
+		8B130DD41DB5822700E379BB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B58853A1DAE03DB00CD4721 /* LaunchScreen.storyboard in Resources */,
-				8B5885371DAE03DB00CD4721 /* Assets.xcassets in Resources */,
-				8B5885351DAE03DB00CD4721 /* Main.storyboard in Resources */,
+				8B130DE41DB5822700E379BB /* LaunchScreen.storyboard in Resources */,
+				8B130DE11DB5822700E379BB /* Assets.xcassets in Resources */,
+				8B97BE451DB6C48A00227FB1 /* StarshipHeader.xib in Resources */,
+				8B130DDF1DB5822700E379BB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8B5885281DAE03DB00CD4721 /* Sources */ = {
+		8B130DD21DB5822700E379BB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B5885321DAE03DB00CD4721 /* ViewController.swift in Sources */,
-				8B5885421DAE129300CD4721 /* FlipView.swift in Sources */,
-				8B5885301DAE03DB00CD4721 /* AppDelegate.swift in Sources */,
+				8B130DED1DB582BA00E379BB /* ParallaxHeader.swift in Sources */,
+				8B130DDC1DB5822700E379BB /* ViewController.swift in Sources */,
+				8B130DDA1DB5822700E379BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8B5885331DAE03DB00CD4721 /* Main.storyboard */ = {
+		8B130DDD1DB5822700E379BB /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8B5885341DAE03DB00CD4721 /* Base */,
+				8B130DDE1DB5822700E379BB /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		8B5885381DAE03DB00CD4721 /* LaunchScreen.storyboard */ = {
+		8B130DE21DB5822700E379BB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8B5885391DAE03DB00CD4721 /* Base */,
+				8B130DE31DB5822700E379BB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -168,7 +180,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8B58853C1DAE03DB00CD4721 /* Debug */ = {
+		8B130DE61DB5822700E379BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -218,7 +230,7 @@
 			};
 			name = Debug;
 		};
-		8B58853D1DAE03DB00CD4721 /* Release */ = {
+		8B130DE71DB5822700E379BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -261,54 +273,52 @@
 			};
 			name = Release;
 		};
-		8B58853F1DAE03DB00CD4721 /* Debug */ = {
+		8B130DE91DB5822700E379BB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = CK4ZXKX8S5;
-				INFOPLIST_FILE = FlipAnimation/Info.plist;
+				INFOPLIST_FILE = ParallaxHeader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.efremidze.FlipAnimation;
+				PRODUCT_BUNDLE_IDENTIFIER = com.efremidze.ParallaxHeader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
-		8B5885401DAE03DB00CD4721 /* Release */ = {
+		8B130DEA1DB5822700E379BB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = CK4ZXKX8S5;
-				INFOPLIST_FILE = FlipAnimation/Info.plist;
+				INFOPLIST_FILE = ParallaxHeader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.efremidze.FlipAnimation;
+				PRODUCT_BUNDLE_IDENTIFIER = com.efremidze.ParallaxHeader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8B5885271DAE03DB00CD4721 /* Build configuration list for PBXProject "FlipAnimation" */ = {
+		8B130DD11DB5822700E379BB /* Build configuration list for PBXProject "ParallaxHeader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8B58853C1DAE03DB00CD4721 /* Debug */,
-				8B58853D1DAE03DB00CD4721 /* Release */,
+				8B130DE61DB5822700E379BB /* Debug */,
+				8B130DE71DB5822700E379BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8B58853E1DAE03DB00CD4721 /* Build configuration list for PBXNativeTarget "FlipAnimation" */ = {
+		8B130DE81DB5822700E379BB /* Build configuration list for PBXNativeTarget "ParallaxHeader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8B58853F1DAE03DB00CD4721 /* Debug */,
-				8B5885401DAE03DB00CD4721 /* Release */,
+				8B130DE91DB5822700E379BB /* Debug */,
+				8B130DEA1DB5822700E379BB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8B5885241DAE03DB00CD4721 /* Project object */;
+	rootObject = 8B130DCE1DB5822700E379BB /* Project object */;
 }
