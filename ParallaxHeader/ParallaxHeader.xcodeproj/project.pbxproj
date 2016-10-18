@@ -59,9 +59,9 @@
 		8B130DD81DB5822700E379BB /* Example */ = {
 			isa = PBXGroup;
 			children = (
-				8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */,
 				8B130DD91DB5822700E379BB /* AppDelegate.swift */,
 				8B130DDB1DB5822700E379BB /* ViewController.swift */,
+				8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */,
 				8B130DDD1DB5822700E379BB /* Main.storyboard */,
 				8B130DE01DB5822700E379BB /* Assets.xcassets */,
 				8B130DE21DB5822700E379BB /* LaunchScreen.storyboard */,
