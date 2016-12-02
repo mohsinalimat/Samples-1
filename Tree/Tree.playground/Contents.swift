@@ -20,7 +20,7 @@ class TreeNode<T> {
 
 extension TreeNode: CustomStringConvertible {
     var description: String {
-        return "\(value)" + " { " + children.map { $0.description }.joined(separator: ", ") + " }"
+        return "\(value) { " + children.map { $0.description }.joined(separator: ", ") + " }"
     }
 }
 
