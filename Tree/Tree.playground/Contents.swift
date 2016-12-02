@@ -3,7 +3,7 @@
 // If Teresa's daughter is my daughter's mother, what am i to Teresa?
 
 class TreeNode<T> {
-    var value: T
+    let value: T
     
     weak var parent: TreeNode?
     var children = [TreeNode<T>]()
@@ -20,11 +20,7 @@ class TreeNode<T> {
 
 extension TreeNode: CustomStringConvertible {
     var description: String {
-        var s = "\(value)"
-        if !children.isEmpty {
-            s += " {" + children.map { $0.description }.joined(separator: ", ") + "}"
-        }
-        return s
+        return "\(value)" + " { " + children.map { $0.description }.joined(separator: ", ") + " }"
     }
 }
 
