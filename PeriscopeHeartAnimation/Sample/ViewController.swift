@@ -22,6 +22,13 @@ class ViewController: UIViewController {
         layer.string = "HELLO"
         layer.foregroundColor = UIColor.red.cgColor
         
+        let shape = CAShapeLayer()
+//        shape.path = self.view.bounds.path2().cgPath
+        shape.path = sinePath(in: self.view.bounds, amplitude: 0.3).cgPath
+        shape.fillColor = UIColor.clear.cgColor
+        shape.strokeColor = UIColor.red.cgColor
+        shape.lineWidth = 2
+        self.view.layer.addSublayer(shape)
     }
     
 }
@@ -34,7 +41,7 @@ private extension CGRect {
 //        
 //        let path = UIBezierPath()
 //        let offset = CGFloat(arc4random() % 1000)
-//        let finalAmplitude: CGFloat = amplitude + Int(arc4random()) % amplitudeRange * 2 - amplitudeRange
+//        let finalAmplitude: CGFloat = amplitude + arc4random() % amplitudeRange * 2 - amplitudeRange
 //        var delta: CGFloat = 0
 //        var y = height
 //        while y >= 0  {
@@ -43,38 +50,60 @@ private extension CGRect {
 //                delta = x
 //                path.move(to: CGPoint(x: midX, y: y))
 //            } else {
-//                path.addLineToPoint(CGPoint(x: x + midX - delta, y: y))
+//                path.addLine(to: CGPoint(x: x + midX - delta, y: y))
 //            }
 //            y = y - 1
 //        }
 //        return path
 //    }
     
-//    func travelPath(inView view: UIView) -> UIBezierPath? {
-//        guard let endPointDirection = RotationDirection(rawValue: CGFloat(1 - Int(2 * randomNumber(2)))) else { return nil }
-//        
-//        let heartCenterX = center.x
-//        let heartSize = bounds.width
-//        let viewHeight = view.bounds.height
-//        
-//        //random end point
-//        let endPointX = heartCenterX + (endPointDirection.rawValue * randomNumber(2 * heartSize))
-//        let endPointY = viewHeight / 8.0 + randomNumber(viewHeight / 4.0)
-//        let endPoint = CGPoint(x: endPointX, y: endPointY)
-//        
-//        //random Control Points
-//        let travelDirection = CGFloat(1 - Int(2 * randomNumber(2)))
-//        let xDelta = (heartSize / 2.0 + randomNumber(2 * heartSize)) * travelDirection
-//        let yDelta = max(endPoint.y ,max(randomNumber(8 * heartSize), heartSize))
-//        let controlPoint1 = CGPoint(x: heartCenterX + xDelta, y: viewHeight - yDelta)
-//        let controlPoint2 = CGPoint(x: heartCenterX - 2 * xDelta, y: yDelta)
-//        
-//        let path = UIBezierPath()
-//        path.moveToPoint(center)
-//        path.addCurveToPoint(endPoint, controlPoint1: controlPoint1, controlPoint2: controlPoint2)
-//        return path
-//    }
+    func path2() -> UIBezierPath {
+        let centerY = height / 2  // find the vertical center
+        let steps = 200                 // Divide the curve into steps
+        let stepX = width / CGFloat(steps) // find the horizontal step distance
+        // Make a path
+        let path = UIBezierPath()
+        // Start in the lower left corner
+        path.move(to: CGPoint(x: 0, y: centerY))
+        // Loop and draw steps in straingt line segments
+        for i in 0...steps {
+            let x = CGFloat(i) * stepX
+            let y = (sin(Double(i) * 0.1) * 40) + Double(centerY)
+            path.addLine(to: CGPoint(x: x, y: CGFloat(y)))
+        }
+        return path
+    }
     
+}
+
+func parametricPath(in rect: CGRect, count: Int? = nil, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
+    let numberOfPoints = count ?? max(Int(rect.size.width), Int(rect.size.height))
+    let path = UIBezierPath()
+    let result = function(0)
+    path.move(to: convert(point: CGPoint(x: result.x, y: result.y), in: rect))
+    for i in 1 ..< numberOfPoints {
+        let t = CGFloat(i) / CGFloat(numberOfPoints - 1)
+        let result = function(t)
+        path.addLine(to: convert(point: CGPoint(x: result.x, y: result.y), in: rect))
+    }
+    return path
+}
+
+func convert(point: CGPoint, in rect: CGRect) -> CGPoint {
+    return CGPoint(
+        x: rect.origin.x + point.x * rect.size.width,
+        y: rect.origin.y + rect.size.height - point.y * rect.size.height
+    )
+}
+
+func sinePath(in rect: CGRect, count: Int? = nil, amplitude: CGFloat = 1) -> UIBezierPath {
+    // note, since sine returns values between -1 and 1, let's add 1 and divide by two to get it between 0 and 1
+    return parametricPath(in: rect, count: count) { CGPoint(x: $0, y: (amplitude * sin($0 * .pi * 2) + 1) / 2) }
+}
+
+func verticalSinePath(in rect: CGRect, count: Int? = nil, amplitude: CGFloat = 1) -> UIBezierPath {
+    // note, since sine returns values between -1 and 1, let's add 1 and divide by two to get it between 0 and 1
+    return parametricPath(in: rect, count: count) { CGPoint(x: (amplitude * sin($0 * .pi * 2) + 1) / 2, y: $0) }
 }
 
 private extension UInt32 {
