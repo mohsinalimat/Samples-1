@@ -14,6 +14,7 @@
 		8B130DE41DB5822700E379BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B130DE21DB5822700E379BB /* LaunchScreen.storyboard */; };
 		8B130DED1DB582BA00E379BB /* ParallaxHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B130DEC1DB582BA00E379BB /* ParallaxHeader.swift */; };
 		8B97BE451DB6C48A00227FB1 /* StarshipHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */; };
+		8BD832891DBEF2AB00E23C56 /* UIScrollViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD832881DBEF2AB00E23C56 /* UIScrollViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		8B130DE51DB5822700E379BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B130DEC1DB582BA00E379BB /* ParallaxHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParallaxHeader.swift; path = Sources/ParallaxHeader.swift; sourceTree = "<group>"; };
 		8B97BE441DB6C48A00227FB1 /* StarshipHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarshipHeader.xib; sourceTree = "<group>"; };
+		8BD832881DBEF2AB00E23C56 /* UIScrollViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIScrollViewExtensions.swift; path = Sources/UIScrollViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				8B130DEC1DB582BA00E379BB /* ParallaxHeader.swift */,
+				8BD832881DBEF2AB00E23C56 /* UIScrollViewExtensions.swift */,
 			);
 			name = ParallaxHeader;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				8B130DED1DB582BA00E379BB /* ParallaxHeader.swift in Sources */,
 				8B130DDC1DB5822700E379BB /* ViewController.swift in Sources */,
 				8B130DDA1DB5822700E379BB /* AppDelegate.swift in Sources */,
+				8BD832891DBEF2AB00E23C56 /* UIScrollViewExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
