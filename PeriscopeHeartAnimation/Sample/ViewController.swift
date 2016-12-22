@@ -18,6 +18,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
+        let path = verticalSinePath(in: self.view.bounds).cgPath
+        
+        let shape = CAShapeLayer()
+        shape.path = path
+        shape.fillColor = UIColor.clear.cgColor
+        shape.strokeColor = UIColor.red.withAlphaComponent(0.2).cgColor
+        self.view.layer.addSublayer(shape)
+        
         let layer: CALayer = {
             switch arc4random_uniform(2) {
             case 0:
@@ -43,7 +51,7 @@ class ViewController: UIViewController {
         
         func positionAnimation() -> CAAnimation {
             let animation = CAKeyframeAnimation(keyPath: "position")
-            animation.path = verticalSinePath(in: self.view.bounds).cgPath
+            animation.path = path
             return animation
         }
         
@@ -63,12 +71,19 @@ class ViewController: UIViewController {
             return animation
         }
         
+        CATransaction.begin()
+        CATransaction.setCompletionBlock { 
+            layer.removeFromSuperlayer()
+        }
+        
         let group = CAAnimationGroup()
         group.duration = duration
         group.isRemovedOnCompletion = false
         group.fillMode = kCAFillModeForwards
         group.animations = [positionAnimation(), opacityAnimation(), rotationAnimation()]
         layer.add(group, forKey: "animations")
+        
+        CATransaction.commit()
     }
     
 }
