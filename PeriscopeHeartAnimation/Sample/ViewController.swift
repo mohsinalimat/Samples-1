@@ -19,13 +19,36 @@ class ViewController: UIViewController {
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
         let path = verticalSinePath(in: self.view.bounds).cgPath
+        let duration = 4 + TimeInterval(random(-1..<1))
+        addTrack(path: path, duration: duration, delay: duration / 2)
+        addPiece(path: path, duration: duration, delay: duration / 2, rotation: Double(random(-1..<1) * .pi * 0.2))
+    }
+    
+    func addTrack(path: CGPath, duration: TimeInterval, delay: TimeInterval) {
+        let layer = CAShapeLayer()
+        layer.path = path
+        layer.fillColor = UIColor.clear.cgColor
+        layer.strokeColor = UIColor.red.withAlphaComponent(0.2).cgColor
+        self.view.layer.addSublayer(layer)
         
-        let shape = CAShapeLayer()
-        shape.path = path
-        shape.fillColor = UIColor.clear.cgColor
-        shape.strokeColor = UIColor.red.withAlphaComponent(0.2).cgColor
-        self.view.layer.addSublayer(shape)
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            layer.removeFromSuperlayer()
+        }
         
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.fromValue = 1
+        animation.toValue = 0
+        animation.beginTime = CACurrentMediaTime() + delay
+        animation.duration = delay
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = kCAFillModeForwards
+        layer.add(animation, forKey: "opacity")
+        
+        CATransaction.commit()
+    }
+    
+    func addPiece(path: CGPath, duration: TimeInterval, delay: TimeInterval, rotation: Double) {
         let layer: CALayer = {
             switch arc4random_uniform(2) {
             case 0:
@@ -47,8 +70,6 @@ class ViewController: UIViewController {
             }
         }()
         
-        let duration = 4 + TimeInterval(random(-1..<1))
-        
         func positionAnimation() -> CAAnimation {
             let animation = CAKeyframeAnimation(keyPath: "position")
             animation.path = path
@@ -59,20 +80,20 @@ class ViewController: UIViewController {
             let animation = CABasicAnimation(keyPath: "opacity")
             animation.fromValue = 1
             animation.toValue = 0
-            animation.beginTime = duration / 2
-            animation.duration = duration / 2
+            animation.beginTime = delay
+            animation.duration = delay
             return animation
         }
         
         func rotationAnimation() -> CAAnimation {
             let animation = CABasicAnimation(keyPath: "transform.rotation")
             animation.fromValue = 0
-            animation.toValue = Double(random(-1..<1) * .pi * 0.2)
+            animation.toValue = rotation
             return animation
         }
         
         CATransaction.begin()
-        CATransaction.setCompletionBlock { 
+        CATransaction.setCompletionBlock {
             layer.removeFromSuperlayer()
         }
         
