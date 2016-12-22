@@ -18,10 +18,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        let path = verticalSinePath(in: self.view.bounds).cgPath
-        let duration = 4 + TimeInterval(random(-1..<1))
+        let rect = self.view.bounds.insetBy(dx: 100, dy: 20)
+        let offset = CGFloat(arc4random_uniform(2)) * .pi
+        let amplitude = 0.5 + (CGFloat(arc4random_uniform(20)) - 10) / 10 * 0.4
+        let frequency = random(1..<2)
+//        let path = verticalSinePath(in: self.view.bounds).cgPath
+        let path = verticalSinePath(in: rect, amplitude: amplitude, frequency: frequency, offset: offset).cgPath
+        let duration = 4 + TimeInterval(random(0..<1))
+        let rotation = Double(random(-1..<1) * .pi * 0.2)
         addTrack(path: path, duration: duration, delay: duration / 2)
-        addPiece(path: path, duration: duration, delay: duration / 2, rotation: Double(random(-1..<1) * .pi * 0.2))
+        addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
     }
     
     func addTrack(path: CGPath, duration: TimeInterval, delay: TimeInterval) {
@@ -53,22 +59,33 @@ class ViewController: UIViewController {
             switch arc4random_uniform(2) {
             case 0:
                 let layer = CATextLayer()
-                layer.frame.size = CGSize(width: 30, height: 30)
                 layer.string = "+10"
                 layer.fontSize = 16
                 layer.foregroundColor = UIColor.red.cgColor
                 layer.alignmentMode = kCAAlignmentCenter
-                layer.contentsScale = UIScreen.main.scale
-                self.view.layer.addSublayer(layer)
                 return layer
             default:
                 let layer = CALayer()
-                layer.frame.size = CGSize(width: 30, height: 30)
                 layer.contents = UIImage(named: "heart")?.cgImage
-                self.view.layer.addSublayer(layer)
                 return layer
             }
         }()
+        layer.frame.size = CGSize(width: 30, height: 30)
+        layer.contentsScale = UIScreen.main.scale
+        self.view.layer.addSublayer(layer)
+        
+//        layer.transform = CATransform3DMakeScale(0, 0, 1)
+//        layer.transform = CATransform3DIdentity
+        
+//        let animation = CASpringAnimation(keyPath: "opacity")
+//        animation.fromValue = 0
+//        animation.toValue = 1
+//        animation.duration = 0.5
+//        animation.initialVelocity = 0.8
+//        animation.damping = 0.6
+//        animation.isRemovedOnCompletion = false
+//        animation.fillMode = kCAFillModeForwards
+//        layer.add(animation, forKey: "opacity")
         
         func positionAnimation() -> CAAnimation {
             let animation = CAKeyframeAnimation(keyPath: "position")
@@ -109,10 +126,8 @@ class ViewController: UIViewController {
     
 }
 
-func verticalSinePath(in rect: CGRect) -> UIBezierPath {
-    let offset = random(0..<(.pi * 2))
-    let amplitude = 0.3 + random(-0.1..<0.1)
-    return parametricPath(in: rect) { CGPoint(x: (amplitude * sin(offset + $0 * .pi * 2) + 1) / 2, y: $0) }
+func verticalSinePath(in rect: CGRect, amplitude: CGFloat, frequency: CGFloat, offset: CGFloat) -> UIBezierPath {
+    return parametricPath(in: rect) { CGPoint(x: (amplitude * sin(offset + frequency * $0 * .pi * 2) + 1) / 2, y: $0) }
 }
 
 func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
