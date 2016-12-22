@@ -40,31 +40,35 @@ class ViewController: UIViewController {
         }()
         
         let duration = 4 + TimeInterval(random(-1..<1))
-        let delay = duration / 2
         
-        let position = CAKeyframeAnimation(keyPath: "position")
-        position.path = verticalSinePath(in: self.view.bounds).cgPath
-        position.duration = duration
-        position.fillMode = kCAFillModeForwards
-        position.isRemovedOnCompletion = false
-        layer.add(position, forKey: "position")
+        func positionAnimation() -> CAAnimation {
+            let animation = CAKeyframeAnimation(keyPath: "position")
+            animation.path = verticalSinePath(in: self.view.bounds).cgPath
+            return animation
+        }
         
-        let opacity = CABasicAnimation(keyPath: "opacity")
-        opacity.fromValue = 1
-        opacity.toValue = 0
-        opacity.beginTime = CACurrentMediaTime() + delay
-        opacity.duration = duration - delay - 0.5
-        opacity.fillMode = kCAFillModeForwards
-        opacity.isRemovedOnCompletion = false
-        layer.add(opacity, forKey: "opacity")
+        func opacityAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.fromValue = 1
+            animation.toValue = 0
+            animation.beginTime = duration / 2
+            animation.duration = duration / 2
+            return animation
+        }
         
-        let rotation = CABasicAnimation(keyPath: "transform.rotation")
-        rotation.fromValue = 0
-        rotation.toValue = Double(random(-1..<1) * .pi * 0.2)
-        rotation.duration = duration
-        rotation.fillMode = kCAFillModeForwards
-        rotation.isRemovedOnCompletion = false
-        layer.add(rotation, forKey: "rotation")
+        func rotationAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "transform.rotation")
+            animation.fromValue = 0
+            animation.toValue = Double(random(-1..<1) * .pi * 0.2)
+            return animation
+        }
+        
+        let group = CAAnimationGroup()
+        group.duration = duration
+        group.isRemovedOnCompletion = false
+        group.fillMode = kCAFillModeForwards
+        group.animations = [positionAnimation(), opacityAnimation(), rotationAnimation()]
+        layer.add(group, forKey: "animations")
     }
     
 }
