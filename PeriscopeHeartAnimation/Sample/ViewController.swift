@@ -18,14 +18,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        let rect = self.view.bounds.insetBy(dx: 100, dy: 20)
-        let offset = CGFloat(arc4random_uniform(2)) * .pi
-        let amplitude = 0.5 + (CGFloat(arc4random_uniform(20)) - 10) / 10 * 0.4
-        let frequency = random(1..<2)
-//        let path = verticalSinePath(in: self.view.bounds).cgPath
-        let path = verticalSinePath(in: rect, amplitude: amplitude, frequency: frequency, offset: offset).cgPath
+        let value = CGFloat(arc4random_uniform(11)) / 10
+        let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
+        let amplitude = 0.1 + (value / 5)
+        let wavelength = 1 + random(0..<1)
+        let path = verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
         let duration = 4 + TimeInterval(random(0..<1))
-        let rotation = Double(random(-1..<1) * .pi * 0.2)
+        let rotation = Double(value * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
         addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
     }
@@ -126,8 +125,8 @@ class ViewController: UIViewController {
     
 }
 
-func verticalSinePath(in rect: CGRect, amplitude: CGFloat, frequency: CGFloat, offset: CGFloat) -> UIBezierPath {
-    return parametricPath(in: rect) { CGPoint(x: (amplitude * sin(offset + frequency * $0 * .pi * 2) + 1) / 2, y: $0) }
+func verticalSinePath(in rect: CGRect, offset: CGFloat, amplitude: CGFloat, wavelength: CGFloat) -> UIBezierPath {
+    return parametricPath(in: rect) { CGPoint(x: (amplitude * sin(offset + wavelength * $0 * .pi * 2) + 1) / 2, y: $0) }
 }
 
 func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
