@@ -18,14 +18,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        let layer = CATextLayer()
-        layer.frame.size = CGSize(width: 30, height: 30)
-        layer.string = "+10"
-        layer.fontSize = 16
-        layer.foregroundColor = UIColor.red.cgColor
-        layer.alignmentMode = kCAAlignmentCenter
-        layer.contentsScale = UIScreen.main.scale
-        self.view.layer.addSublayer(layer)
+        let layer: CALayer = {
+            switch arc4random_uniform(2) {
+            case 0:
+                let layer = CATextLayer()
+                layer.frame.size = CGSize(width: 30, height: 30)
+                layer.string = "+10"
+                layer.fontSize = 16
+                layer.foregroundColor = UIColor.red.cgColor
+                layer.alignmentMode = kCAAlignmentCenter
+                layer.contentsScale = UIScreen.main.scale
+                self.view.layer.addSublayer(layer)
+                return layer
+            default:
+                let layer = CALayer()
+                layer.frame.size = CGSize(width: 30, height: 30)
+                layer.contents = UIImage(named: "heart")?.cgImage
+                self.view.layer.addSublayer(layer)
+                return layer
+            }
+        }()
         
         let duration = 4 + TimeInterval(random(-1..<1))
         let delay = duration / 2
@@ -33,6 +45,8 @@ class ViewController: UIViewController {
         let position = CAKeyframeAnimation(keyPath: "position")
         position.path = verticalSinePath(in: self.view.bounds).cgPath
         position.duration = duration
+        position.fillMode = kCAFillModeForwards
+        position.isRemovedOnCompletion = false
         layer.add(position, forKey: "position")
         
         let opacity = CABasicAnimation(keyPath: "opacity")
@@ -43,6 +57,14 @@ class ViewController: UIViewController {
         opacity.fillMode = kCAFillModeForwards
         opacity.isRemovedOnCompletion = false
         layer.add(opacity, forKey: "opacity")
+        
+        let rotation = CABasicAnimation(keyPath: "transform.rotation")
+        rotation.fromValue = 0
+        rotation.toValue = Double(random(-1..<1) * .pi * 0.2)
+        rotation.duration = duration
+        rotation.fillMode = kCAFillModeForwards
+        rotation.isRemovedOnCompletion = false
+        layer.add(rotation, forKey: "rotation")
     }
     
 }
