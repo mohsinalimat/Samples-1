@@ -19,27 +19,41 @@ class ViewController: UIViewController {
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
         let layer = CATextLayer()
-        layer.string = "HELLO"
+        layer.frame.size = CGSize(width: 30, height: 30)
+        layer.string = "+10"
+        layer.fontSize = 16
         layer.foregroundColor = UIColor.red.cgColor
+        layer.alignmentMode = kCAAlignmentCenter
+        layer.contentsScale = UIScreen.main.scale
+        self.view.layer.addSublayer(layer)
         
-        let shape = CAShapeLayer()
-        shape.path = verticalSinePath(in: self.view.bounds).cgPath
-        shape.fillColor = UIColor.clear.cgColor
-        shape.strokeColor = UIColor.red.cgColor
-        shape.lineWidth = 2
-        self.view.layer.addSublayer(shape)
+        let duration = 4 + TimeInterval(random(-1..<1))
+        let delay = duration / 2
+        
+        let position = CAKeyframeAnimation(keyPath: "position")
+        position.path = verticalSinePath(in: self.view.bounds).cgPath
+        position.duration = duration
+        layer.add(position, forKey: "position")
+        
+        let opacity = CABasicAnimation(keyPath: "opacity")
+        opacity.fromValue = 1
+        opacity.toValue = 0
+        opacity.beginTime = CACurrentMediaTime() + delay
+        opacity.duration = duration - delay - 0.5
+        opacity.fillMode = kCAFillModeForwards
+        opacity.isRemovedOnCompletion = false
+        layer.add(opacity, forKey: "opacity")
     }
     
 }
 
-private func verticalSinePath(in rect: CGRect) -> UIBezierPath {
-    let offset = CGFloat.random(0..<(.pi * 2))
-    let amplitude = 0.3 + CGFloat.random(-0.1..<0.1)
-    // note, since sine returns values between -1 and 1, let's add 1 and divide by two to get it between 0 and 1
+func verticalSinePath(in rect: CGRect) -> UIBezierPath {
+    let offset = random(0..<(.pi * 2))
+    let amplitude = 0.3 + random(-0.1..<0.1)
     return parametricPath(in: rect) { CGPoint(x: (amplitude * sin(offset + $0 * .pi * 2) + 1) / 2, y: $0) }
 }
 
-private func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
+func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
     let numberOfPoints = max(Int(rect.size.width), Int(rect.size.height))
     let path = UIBezierPath()
     let result = function(0)
@@ -52,25 +66,13 @@ private func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -
     return path
 }
 
-private func convert(point: CGPoint, in rect: CGRect) -> CGPoint {
+func convert(point: CGPoint, in rect: CGRect) -> CGPoint {
     return CGPoint(
         x: rect.origin.x + point.x * rect.size.width,
         y: rect.origin.y + rect.size.height - point.y * rect.size.height
     )
 }
 
-private extension UInt32 {
-    
-    static func random(_ range: Range<UInt32>) -> UInt32 {
-        return arc4random_uniform(range.upperBound - range.lowerBound) + range.lowerBound
-    }
-    
-}
-
-private extension CGFloat {
-    
-    static func random(_ range: Range<CGFloat>) -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (range.upperBound - range.lowerBound) + range.lowerBound
-    }
-    
+func random(_ range: Range<CGFloat>) -> CGFloat {
+    return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (range.upperBound - range.lowerBound) + range.lowerBound
 }
