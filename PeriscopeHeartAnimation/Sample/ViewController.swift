@@ -18,13 +18,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        let value = CGFloat(arc4random_uniform(11)) / 10
         let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
-        let amplitude = 0.1 + (value / 5)
+        let amplitude = random(-0.2..<0.2)
         let wavelength = 1 + random(0..<1)
         let path = verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
         let duration = 4 + TimeInterval(random(0..<1))
-        let rotation = Double(value * .pi)
+        let rotation = Double(random(-0.1..<0.1) * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
         addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
     }
