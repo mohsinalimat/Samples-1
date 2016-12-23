@@ -18,12 +18,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
+        addLayer(duration: 4, durationRange: 1, amplitude: 0.2, amplitudeRange: 0.2, wavelength: 0.75, wavelengthRange: 0.25, rotationRange: 0.2)
+    }
+    
+    func addLayer(duration: TimeInterval, durationRange: TimeInterval, amplitude: CGFloat, amplitudeRange: CGFloat, wavelength: CGFloat, wavelengthRange: CGFloat, rotationRange: CGFloat) {
         let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
-        let amplitude = random(-0.2..<0.2)
-        let wavelength = 1 + random(0..<1)
+        let amplitude = amplitude + random(amplitudeRange)
+        let wavelength = wavelength + random(wavelengthRange)
         let path = verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
-        let duration = 4 + TimeInterval(random(0..<1))
-        let rotation = Double(random(-0.1..<0.1) * .pi)
+        let duration = duration + random(durationRange)
+        let rotation = Double(random(rotationRange) * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
         addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
     }
@@ -71,9 +75,6 @@ class ViewController: UIViewController {
         layer.frame.size = CGSize(width: 30, height: 30)
         layer.contentsScale = UIScreen.main.scale
         self.view.layer.addSublayer(layer)
-        
-//        layer.transform = CATransform3DMakeScale(0, 0, 1)
-//        layer.transform = CATransform3DIdentity
         
 //        let animation = CASpringAnimation(keyPath: "opacity")
 //        animation.fromValue = 0
@@ -146,6 +147,14 @@ func convert(point: CGPoint, in rect: CGRect) -> CGPoint {
         x: rect.origin.x + point.x * rect.size.width,
         y: rect.origin.y + rect.size.height - point.y * rect.size.height
     )
+}
+
+func random(_ range: Double) -> Double {
+    return Double(random(CGFloat(range)))
+}
+
+func random(_ range: CGFloat) -> CGFloat {
+    return random(-range..<range)
 }
 
 func random(_ range: Range<CGFloat>) -> CGFloat {
