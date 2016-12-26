@@ -22,11 +22,11 @@ class ViewController: UIViewController {
     
     func addLayer(duration: TimeInterval, durationRange: TimeInterval, amplitude: CGFloat, amplitudeRange: CGFloat, wavelength: CGFloat, wavelengthRange: CGFloat, rotationRange: CGFloat) {
         let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
-        let amplitude = amplitude + random(amplitudeRange)
-        let wavelength = wavelength + random(wavelengthRange)
+        let amplitude = amplitude + Random.random(amplitudeRange)
+        let wavelength = wavelength + Random.random(wavelengthRange)
         let path = verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
-        let duration = duration + random(durationRange)
-        let rotation = Double(random(rotationRange) * .pi)
+        let duration = duration + Random.random(durationRange)
+        let rotation = Double(Random.random(rotationRange) * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
 //        let layer = addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
 //        layer.float(amplitude: amplitude, wavelength: wavelength, duration: duration, delay: duration / 2, rotation: rotation)
@@ -76,7 +76,6 @@ class ViewController: UIViewController {
         layer.position = self.view.center
         layer.contentsScale = UIScreen.main.scale
         self.view.layer.addSublayer(layer)
-        
         return layer
     }
     
@@ -165,29 +164,6 @@ func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezi
     return path
 }
 
-extension CGPoint {
-    
-    func `in`(rect: CGRect) -> CGPoint {
-        return CGPoint(
-            x: rect.origin.x + self.x * rect.size.width,
-            y: rect.origin.y + rect.size.height - self.y * rect.size.height
-        )
-    }
-    
-}
-
-func random(_ range: Double) -> Double {
-    return Double(random(CGFloat(range)))
-}
-
-func random(_ range: CGFloat) -> CGFloat {
-    return random(-range..<range)
-}
-
-func random(_ range: Range<CGFloat>) -> CGFloat {
-    return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (range.upperBound - range.lowerBound) + range.lowerBound
-}
-
 extension CALayer {
     
     func float(amplitude: CGFloat, wavelength: CGFloat, duration: TimeInterval, delay: TimeInterval, rotation: Double) {
@@ -199,6 +175,34 @@ extension CALayer {
                 self.removeFromSuperlayer()
             }
         }
+    }
+    
+}
+
+extension CGPoint {
+    
+    /// convert sine wave to CGPoint (y axis inverted)
+    func `in`(rect: CGRect) -> CGPoint {
+        return CGPoint(
+            x: rect.origin.x + self.x * rect.size.width,
+            y: rect.origin.y + rect.size.height - self.y * rect.size.height
+        )
+    }
+    
+}
+
+struct Random {
+    
+    static func random(_ range: Double) -> Double {
+        return Double(random(CGFloat(range)))
+    }
+    
+    static func random(_ range: CGFloat) -> CGFloat {
+        return random(-range..<range)
+    }
+    
+    static func random(_ range: Range<CGFloat>) -> CGFloat {
+        return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (range.upperBound - range.lowerBound) + range.lowerBound
     }
     
 }
