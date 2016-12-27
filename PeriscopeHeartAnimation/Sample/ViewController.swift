@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        addLayer(duration: 4, durationRange: 2, amplitude: 0.5, amplitudeRange: 0.2, wavelength: 0.5, wavelengthRange: 0.2, rotationRange: 0.2)
+        addLayer(duration: 6, durationRange: 2, amplitude: 0.5, amplitudeRange: 0.2, wavelength: 0.5, wavelengthRange: 0.2, rotationRange: 0.2)
     }
     
     func addLayer(duration: TimeInterval, durationRange: TimeInterval, amplitude: CGFloat, amplitudeRange: CGFloat, wavelength: CGFloat, wavelengthRange: CGFloat, rotationRange: CGFloat) {
@@ -28,8 +28,9 @@ class ViewController: UIViewController {
         let duration = duration + Random.random(durationRange)
         let rotation = Double(Random.random(rotationRange) * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
-//        let layer = addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
-//        layer.float(amplitude: amplitude, wavelength: wavelength, duration: duration, delay: duration / 2, rotation: rotation)
+        let layer = addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
+        layer.position = Path.verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength, angle: 0)
+        layer.float(path: path, duration: duration, delay: duration / 2, rotation: rotation)
     }
     
     func addTrack(path: CGPath, duration: TimeInterval, delay: TimeInterval) {
@@ -73,7 +74,6 @@ class ViewController: UIViewController {
             }
         }()
         layer.frame.size = CGSize(width: 30, height: 30)
-        layer.position = self.view.center
         layer.contentsScale = UIScreen.main.scale
         self.view.layer.addSublayer(layer)
         return layer
@@ -149,10 +149,7 @@ class ViewController: UIViewController {
 
 extension CALayer {
     
-    func float(amplitude: CGFloat, wavelength: CGFloat, duration: TimeInterval, delay: TimeInterval, rotation: Double) {
-        let rect = self.bounds
-        let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
-        let path = Path.verticalSinePath(in: rect, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
+    func float(path: CGPath, duration: TimeInterval, delay: TimeInterval, rotation: Double) {
         showAnimation(layer: self, duration: 0.5) {
             positionAnimation(layer: self, path: path, duration: duration, delay: delay, rotation: rotation) {
                 self.removeFromSuperlayer()
