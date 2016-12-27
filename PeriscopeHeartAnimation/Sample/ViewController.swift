@@ -17,14 +17,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        addLayer(duration: 6, durationRange: 1, amplitude: 0.2, amplitudeRange: 0.2, wavelength: 0.75, wavelengthRange: 0.25, rotationRange: 0.2)
+        addLayer(duration: 4, durationRange: 2, amplitude: 0.5, amplitudeRange: 0.2, wavelength: 0.5, wavelengthRange: 0.2, rotationRange: 0.2)
     }
     
     func addLayer(duration: TimeInterval, durationRange: TimeInterval, amplitude: CGFloat, amplitudeRange: CGFloat, wavelength: CGFloat, wavelengthRange: CGFloat, rotationRange: CGFloat) {
         let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
         let amplitude = amplitude + Random.random(amplitudeRange)
         let wavelength = wavelength + Random.random(wavelengthRange)
-        let path = verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
+        let path = Path.verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
         let duration = duration + Random.random(durationRange)
         let rotation = Double(Random.random(rotationRange) * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
@@ -147,29 +147,12 @@ class ViewController: UIViewController {
         CATransaction.commit()
     }
 
-func verticalSinePath(in rect: CGRect, offset: CGFloat, amplitude: CGFloat, wavelength: CGFloat) -> UIBezierPath {
-    return parametricPath(in: rect) { CGPoint(x: (amplitude * sin(offset + wavelength * $0 * .pi * 2) + 1) / 2, y: $0) }
-}
-
-func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
-    let numberOfPoints = max(Int(rect.size.width), Int(rect.size.height))
-    let path = UIBezierPath()
-    let result = function(0)
-    path.move(to: CGPoint(x: result.x, y: result.y).in(rect: rect))
-    for i in 1 ..< numberOfPoints {
-        let t = CGFloat(i) / CGFloat(numberOfPoints - 1)
-        let result = function(t)
-        path.addLine(to: CGPoint(x: result.x, y: result.y).in(rect: rect))
-    }
-    return path
-}
-
 extension CALayer {
     
     func float(amplitude: CGFloat, wavelength: CGFloat, duration: TimeInterval, delay: TimeInterval, rotation: Double) {
         let rect = self.bounds
         let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
-        let path = verticalSinePath(in: rect, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
+        let path = Path.verticalSinePath(in: rect, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
         showAnimation(layer: self, duration: 0.5) {
             positionAnimation(layer: self, path: path, duration: duration, delay: delay, rotation: rotation) {
                 self.removeFromSuperlayer()
@@ -181,11 +164,11 @@ extension CALayer {
 
 extension CGPoint {
     
-    /// convert sine wave to CGPoint (y axis inverted)
+    /// convert sine wave to CGPoint
     func `in`(rect: CGRect) -> CGPoint {
         return CGPoint(
             x: rect.origin.x + self.x * rect.size.width,
-            y: rect.origin.y + rect.size.height - self.y * rect.size.height
+            y: rect.origin.y + self.y * rect.size.height
         )
     }
     
@@ -203,6 +186,33 @@ struct Random {
     
     static func random(_ range: Range<CGFloat>) -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UINT32_MAX) * (range.upperBound - range.lowerBound) + range.lowerBound
+    }
+    
+}
+
+struct Path {
+    
+    static func verticalSinePath(in rect: CGRect, offset: CGFloat, amplitude: CGFloat, wavelength: CGFloat) -> UIBezierPath {
+        return parametricPath(in: rect) { verticalSinePath(in: rect, offset: offset, amplitude: amplitude, wavelength: wavelength, angle: $0) }
+    }
+    
+    static func verticalSinePath(in rect: CGRect, offset: CGFloat, amplitude: CGFloat, wavelength: CGFloat, angle: CGFloat) -> CGPoint {
+        let width = rect.width / 2
+        let origin = CGPoint(x: width, y: rect.height)
+        let x = origin.x + sin(offset + angle / 360 * .pi * 2 * 1 / wavelength) * width * amplitude
+        let y = origin.y - angle / 360 * rect.height
+        return CGPoint(x: x, y: y)
+    }
+    
+    static func parametricPath(in rect: CGRect, function: (CGFloat) -> (CGPoint)) -> UIBezierPath {
+        let path = UIBezierPath()
+        let result = function(0)
+        path.move(to: CGPoint(x: result.x, y: result.y))
+        for angle: CGFloat in stride(from: 5, through: 360, by: 5) {
+            let result = function(angle)
+            path.addLine(to: CGPoint(x: result.x, y: result.y))
+        }
+        return path
     }
     
 }

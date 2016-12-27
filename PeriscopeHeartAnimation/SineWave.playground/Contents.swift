@@ -22,8 +22,6 @@ class SineView: UIView {
             path.addLine(to: CGPoint(x: x, y: y))
         }
         
-//        CGPoint(x: (amplitude * sin(offset + wavelength * $0 * .pi * 2) + 1) / 2, y: $0)
-        
         UIColor.black.setStroke()
         path.stroke()
     }
