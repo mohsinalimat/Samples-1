@@ -3,24 +3,26 @@
 import UIKit
 
 class SineView: UIView {
-    let graphWidth: CGFloat = 0.8  // Graph is 80% of the width of the view
-    let amplitude: CGFloat = 0.3   // Amplitude of sine wave is 30% of view height
-    let periods: CGFloat = 1.0
+    let amplitude: CGFloat = 0.5
+    let wavelength: CGFloat = 0.5
     
     override func draw(_ rect: CGRect) {
-        let width = rect.width
-        let height = rect.height
+        let height = rect.height / 2
         
-        let origin = CGPoint(x: width * (1 - graphWidth) / 2, y: height * 0.50)
+        let origin = CGPoint(x: 0, y: height)
         
         let path = UIBezierPath()
         path.move(to: origin)
         
-        for angle in stride(from: 5.0, through: 360 * periods, by: 5) {
-            let x = origin.x + angle / (360 * periods) * width * graphWidth
-            let y = origin.y - sin(angle / 180 * .pi) * height * amplitude
+        for angle: CGFloat in stride(from: 5, through: 360, by: 5) {
+//        (1 ..< 360).map { CGFloat($0) }.forEach { angle in
+            let x = origin.x + angle / 360 * rect.width
+            let y = origin.y - sin(angle / 360 * .pi * 2 * 1 / wavelength) * height * amplitude
+//            let y = origin.y - sin(angle / 360 * .pi * 2) * height
             path.addLine(to: CGPoint(x: x, y: y))
         }
+        
+//        CGPoint(x: (amplitude * sin(offset + wavelength * $0 * .pi * 2) + 1) / 2, y: $0)
         
         UIColor.black.setStroke()
         path.stroke()
