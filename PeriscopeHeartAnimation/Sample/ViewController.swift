@@ -17,19 +17,20 @@ class ViewController: UIViewController {
     }
     
     @IBAction func invoke(_ recognizer: UIGestureRecognizer) {
-        addLayer(duration: 6, durationRange: 2, amplitude: 0.5, amplitudeRange: 0.2, wavelength: 0.5, wavelengthRange: 0.2, rotationRange: 0.2)
+        addLayer(duration: 8, durationRange: 0, amplitude: 0.5, amplitudeRange: 0.2, wavelength: 0.5, wavelengthRange: 0.2, rotationRange: 0.2)
     }
     
     func addLayer(duration: TimeInterval, durationRange: TimeInterval, amplitude: CGFloat, amplitudeRange: CGFloat, wavelength: CGFloat, wavelengthRange: CGFloat, rotationRange: CGFloat) {
+        let rect = self.view.bounds.insetBy(dx: 20, dy: 20)
         let offset = CGFloat(arc4random_uniform(2)) * .pi // left or right curve
         let amplitude = amplitude + Random.random(amplitudeRange)
         let wavelength = wavelength + Random.random(wavelengthRange)
-        let path = Path.verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
+        let path = Path.verticalSinePath(in: rect, offset: offset, amplitude: amplitude, wavelength: wavelength).cgPath
         let duration = duration + Random.random(durationRange)
         let rotation = Double(Random.random(rotationRange) * .pi)
         addTrack(path: path, duration: duration, delay: duration / 2)
         let layer = addPiece(path: path, duration: duration, delay: duration / 2, rotation: rotation)
-        layer.position = Path.verticalSinePath(in: self.view.bounds, offset: offset, amplitude: amplitude, wavelength: wavelength, angle: 0)
+        layer.position = Path.verticalSinePath(in: rect, offset: offset, amplitude: amplitude, wavelength: wavelength, angle: 0)
         layer.float(path: path, duration: duration, delay: duration / 2, rotation: rotation)
     }
     
@@ -75,83 +76,18 @@ class ViewController: UIViewController {
         }()
         layer.frame.size = CGSize(width: 30, height: 30)
         layer.contentsScale = UIScreen.main.scale
+        layer.anchorPoint = CGPoint(x: 0.5, y: 1)
         self.view.layer.addSublayer(layer)
         return layer
     }
     
 }
 
-    func showAnimation(layer: CALayer, duration: TimeInterval, completion: @escaping () -> ()) {
-        func scaleAnimation() -> CAAnimation {
-            let animation = CASpringAnimation(keyPath: "transform.scale")
-            animation.fromValue = 0
-            animation.toValue = 1
-//            animation.initialVelocity = 0.2
-//            animation.damping = 0.6
-            return animation
-        }
-        
-        func opacityAnimation() -> CAAnimation {
-            let animation = CABasicAnimation(keyPath: "opacity")
-            animation.fromValue = 0
-            animation.toValue = 1
-            return animation
-        }
-        
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        
-        let group = CAAnimationGroup()
-        group.duration = duration
-        group.isRemovedOnCompletion = false
-        group.fillMode = kCAFillModeForwards
-        group.animations = [scaleAnimation(), opacityAnimation()]
-        layer.add(group, forKey: "animations")
-        
-        CATransaction.commit()
-    }
-    
-    func positionAnimation(layer: CALayer, path: CGPath, duration: TimeInterval, delay: TimeInterval, rotation: Double, completion: @escaping () -> ()) {
-        func positionAnimation() -> CAAnimation {
-            let animation = CAKeyframeAnimation(keyPath: "position")
-            animation.path = path
-            return animation
-        }
-        
-        func opacityAnimation() -> CAAnimation {
-            let animation = CABasicAnimation(keyPath: "opacity")
-            animation.fromValue = 1
-            animation.toValue = 0
-            animation.beginTime = delay
-            animation.duration = delay
-            return animation
-        }
-        
-        func rotationAnimation() -> CAAnimation {
-            let animation = CABasicAnimation(keyPath: "transform.rotation")
-            animation.fromValue = 0
-            animation.toValue = rotation
-            return animation
-        }
-        
-        CATransaction.begin()
-        CATransaction.setCompletionBlock(completion)
-        
-        let group = CAAnimationGroup()
-        group.duration = duration
-        group.isRemovedOnCompletion = false
-        group.fillMode = kCAFillModeForwards
-        group.animations = [positionAnimation(), opacityAnimation(), rotationAnimation()]
-        layer.add(group, forKey: "animations")
-        
-        CATransaction.commit()
-    }
-
 extension CALayer {
     
     func float(path: CGPath, duration: TimeInterval, delay: TimeInterval, rotation: Double) {
-        showAnimation(layer: self, duration: 0.5) {
-            positionAnimation(layer: self, path: path, duration: duration, delay: delay, rotation: rotation) {
+        Animations.showAnimation(layer: self, duration: 1) {
+            Animations.positionAnimation(layer: self, path: path, duration: duration, delay: delay, rotation: rotation) {
                 self.removeFromSuperlayer()
             }
         }
@@ -210,6 +146,75 @@ struct Path {
             path.addLine(to: CGPoint(x: result.x, y: result.y))
         }
         return path
+    }
+    
+}
+
+struct Animations {
+    
+    static func showAnimation(layer: CALayer, duration: TimeInterval, completion: @escaping () -> ()) {
+        func scaleAnimation() -> CAAnimation {
+            let animation = CASpringAnimation(keyPath: "transform.scale")
+            animation.fromValue = 0
+            animation.toValue = 1
+            animation.damping = 10
+            return animation
+        }
+        
+        func opacityAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.fromValue = 0
+            animation.toValue = 1
+            return animation
+        }
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        let group = CAAnimationGroup()
+        group.duration = duration
+        group.isRemovedOnCompletion = false
+        group.fillMode = kCAFillModeForwards
+        group.animations = [scaleAnimation(), opacityAnimation()]
+        layer.add(group, forKey: "animations")
+        
+        CATransaction.commit()
+    }
+    
+    static func positionAnimation(layer: CALayer, path: CGPath, duration: TimeInterval, delay: TimeInterval, rotation: Double, completion: @escaping () -> ()) {
+        func positionAnimation() -> CAAnimation {
+            let animation = CAKeyframeAnimation(keyPath: "position")
+            animation.path = path
+            return animation
+        }
+        
+        func opacityAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.fromValue = 1
+            animation.toValue = 0
+            animation.beginTime = delay
+            animation.duration = delay
+            return animation
+        }
+        
+        func rotationAnimation() -> CAAnimation {
+            let animation = CABasicAnimation(keyPath: "transform.rotation")
+            animation.fromValue = 0
+            animation.toValue = rotation
+            return animation
+        }
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        let group = CAAnimationGroup()
+        group.duration = duration
+        group.isRemovedOnCompletion = false
+        group.fillMode = kCAFillModeForwards
+        group.animations = [positionAnimation(), opacityAnimation(), rotationAnimation()]
+        layer.add(group, forKey: "animations")
+        
+        CATransaction.commit()
     }
     
 }
