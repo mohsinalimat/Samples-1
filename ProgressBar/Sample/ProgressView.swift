@@ -39,6 +39,22 @@ class ProgressView: UIView {
     
     private(set) var progress: Float = 0 // 0.0 .. 1.0, default is 0.0.
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        commonInit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        commonInit()
+    }
+    
+    func commonInit() {
+        setProgress(0, animated: false)
+    }
+    
     func setProgress(_ progress: Float, animated: Bool) {
         if animated {
             let duration = TimeInterval(abs(self.progress - progress))

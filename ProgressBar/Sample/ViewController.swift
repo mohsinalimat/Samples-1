@@ -15,7 +15,6 @@ class ViewController: UIViewController {
             progressBar.backgroundColor = UIColor(white: 0.9, alpha: 1)
             progressBar.foregroundColor = UIColor(red: 0, green: 0.46, blue: 0.76, alpha: 1)
             progressBar.cornerRadius = progressBar.frame.height / 2
-            progressBar.setProgress(0, animated: false)
         }
     }
     @IBOutlet weak var progressView: UIProgressView! {
