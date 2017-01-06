@@ -29,16 +29,26 @@
                                     <constraint firstAttribute="height" constant="30" id="T59-4n-G6L"/>
                                 </constraints>
                             </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CIn-6w-UZS">
+                                <rect key="frame" x="112" y="432" width="150" height="2"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="vzr-oa-9iL"/>
+                                </constraints>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="5yK-iz-RmD" secondAttribute="trailing" constant="20" id="BzY-VO-bnt"/>
+                            <constraint firstItem="CIn-6w-UZS" firstAttribute="top" secondItem="5yK-iz-RmD" secondAttribute="bottom" constant="50" id="EgP-Jk-wYR"/>
                             <constraint firstItem="5yK-iz-RmD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="Stj-v7-sZB"/>
+                            <constraint firstItem="CIn-6w-UZS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="Vgp-mm-fF9"/>
                             <constraint firstItem="5yK-iz-RmD" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="aQW-rB-UT5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CIn-6w-UZS" secondAttribute="trailing" constant="20" id="z9D-Sc-JHl"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="progressBar" destination="5yK-iz-RmD" id="Q96-I9-LQ3"/>
+                        <outlet property="progressView" destination="CIn-6w-UZS" id="cRr-rU-ggH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

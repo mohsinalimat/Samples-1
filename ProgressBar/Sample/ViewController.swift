@@ -10,28 +10,29 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var progressBar: ProgressBar!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        progressBar.backgroundColor = UIColor(white: 0.9, alpha: 1)
-        progressBar.foregroundColor = UIColor(red: 0, green: 0.46, blue: 0.76, alpha: 1)
-        progressBar.cornerRadius = progressBar.frame.height / 2
+    @IBOutlet weak var progressBar: ProgressBar! {
+        didSet {
+            progressBar.backgroundColor = UIColor(white: 0.9, alpha: 1)
+            progressBar.foregroundColor = UIColor(red: 0, green: 0.46, blue: 0.76, alpha: 1)
+            progressBar.cornerRadius = progressBar.frame.height / 2
+        }
+    }
+    @IBOutlet weak var progressView: UIProgressView! {
+        didSet {
+            progressView.trackTintColor = UIColor(white: 0.9, alpha: 1)
+            progressView.progressTintColor = UIColor(red: 0, green: 0.46, blue: 0.76, alpha: 1)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        progressBar.progress = 0.5
+//        let deadlineTime = DispatchTime.now() + .seconds(1)
+//        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+//            self.progressBar.set(progress: 0.5, animated: true)
+//        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
 }
 
 class ProgressBar: UIView {
@@ -39,22 +40,21 @@ class ProgressBar: UIView {
     private lazy var progressShape: CAShapeLayer = { [unowned self] in
         let shape = CAShapeLayer()
         shape.frame = self.bounds
-        shape.cornerRadius = shape.frame.height / 2
         shape.backgroundColor = self.tintColor.cgColor
-//        shape.strokeColor = self.tintColor.cgColor
-//        shape.lineCap = kCALineCapRound
-//        shape.lineWidth = shape.frame.height
-//        let path = UIBezierPath()
-//        path.move(to: CGPoint(x: 0, y: self.frame.height / 2))
-//        path.addLine(to: CGPoint(x: self.frame.width, y: self.frame.height / 2))
-//        shape.path = path.cgPath
+        shape.cornerRadius = self.cornerRadius
         self.layer.addSublayer(shape)
         return shape
     }()
     
-    var progress: CGFloat = 0 {
+    var progress: Float = 0 {
         didSet {
-            update(progress: progress)
+            setProgress(progress, animated: false)
+        }
+    }
+    
+    override var tintColor: UIColor! {
+        didSet {
+            progressShape.strokeColor = tintColor.cgColor
         }
     }
     
@@ -65,35 +65,23 @@ class ProgressBar: UIView {
     
     var cornerRadius: CGFloat {
         get { return layer.cornerRadius }
-        set { layer.cornerRadius = newValue }
-    }
-    
-    override var tintColor: UIColor! {
-        didSet {
-            progressShape.strokeColor = tintColor.cgColor
+        set {
+            layer.cornerRadius = newValue
+            progressShape.cornerRadius = newValue
         }
     }
     
-    func update(progress: CGFloat) {
-        UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: [], animations: { [unowned self] in
-            self.progressShape.frame.size.width = progress * self.bounds.width
-        }, completion: nil)
-//        CATransaction.begin()
-//        let animation = CABasicAnimation(keyPath: "strokeEnd")
-//        animation.duration = CFTimeInterval(5)
-//        animation.toValue = progress
-//        animation.isRemovedOnCompletion = false
-//        animation.fillMode = kCAFillModeForwards
-//        progressShape.add(animation, forKey: "strokeEnd")
+    func setProgress(_ progress: Float, animated: Bool) {
+        let animation = CASpringAnimation(keyPath: "bounds")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.damping = 10
+        animation.duration = 5
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = kCAFillModeForwards
+        progressShape.add(animation, forKey: "bounds")
         
-//        if animated {
-//            CATransaction.setAnimationDuration(5)
-//        } else {
-//            CATransaction.setDisableActions(true)
-//        }
-//        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut))
-//        progressShape.frame.size.width = progress * self.bounds.width
-//        CATransaction.commit()
+//        self.progressShape.frame.size.width = progress * self.bounds.width
     }
     
 }
