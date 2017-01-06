@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B1D35661E20582F000AE24C /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1D35651E20582F000AE24C /* ProgressView.swift */; };
 		8BB830CE1E1DA51D002D1F21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB830CD1E1DA51D002D1F21 /* AppDelegate.swift */; };
 		8BB830D01E1DA51D002D1F21 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB830CF1E1DA51D002D1F21 /* ViewController.swift */; };
 		8BB830D31E1DA51D002D1F21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BB830D11E1DA51D002D1F21 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B1D35651E20582F000AE24C /* ProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		8BB830CA1E1DA51D002D1F21 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BB830CD1E1DA51D002D1F21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BB830CF1E1DA51D002D1F21 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				8BB830CD1E1DA51D002D1F21 /* AppDelegate.swift */,
 				8BB830CF1E1DA51D002D1F21 /* ViewController.swift */,
+				8B1D35651E20582F000AE24C /* ProgressView.swift */,
 				8BB830D11E1DA51D002D1F21 /* Main.storyboard */,
 				8BB830D41E1DA51D002D1F21 /* Assets.xcassets */,
 				8BB830D61E1DA51D002D1F21 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				8BB830D01E1DA51D002D1F21 /* ViewController.swift in Sources */,
 				8BB830CE1E1DA51D002D1F21 /* AppDelegate.swift in Sources */,
+				8B1D35661E20582F000AE24C /* ProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
