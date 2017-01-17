@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let maskBackgroundColor = UIColor(colorLiteralRed: 56, green: 57, blue: 57, alpha: 1)
+private let maskBackgroundColor = UIColor(red: 56, green: 57, blue: 57)
 private let maskBackgroundOpacity: CGFloat = 0.5
 
 class NotificationView: UIView {
@@ -18,12 +18,16 @@ class NotificationView: UIView {
         didSet {
             titleLabel.font = .boldSystemFont(ofSize: 15)
             titleLabel.textColor = .white
+            titleLabel.textAlignment = .center
+            titleLabel.numberOfLines = 0
         }
     }
     @IBOutlet fileprivate weak var subtitleLabel: UILabel! {
         didSet {
             subtitleLabel.font = .boldSystemFont(ofSize: 15)
             subtitleLabel.textColor = .white
+            subtitleLabel.textAlignment = .center
+            subtitleLabel.numberOfLines = 0
         }
     }
     @IBOutlet fileprivate weak var backgroundViewTopConstraint: NSLayoutConstraint! {
@@ -32,12 +36,12 @@ class NotificationView: UIView {
         }
     }
     
-    var title: String? {
-        get { return titleLabel.attributedText?.string }
-        set { titleLabel.attributedText = NSAttributedString(string: newValue ?? "", minimumLineHeight: 21, alignment: .center) }
+    fileprivate var title: String? {
+        get { return titleLabel.text }
+        set { titleLabel.text = newValue }
     }
     
-    var subtitle: String? {
+    fileprivate var subtitle: String? {
         get { return subtitleLabel.text }
         set { subtitleLabel.text = newValue }
     }
@@ -75,7 +79,6 @@ extension NotificationView {
         
         view.addGestureRecognizer(UIPanGestureRecognizer { recognizer in
             guard let recognizer = recognizer as? UIPanGestureRecognizer else { return }
-            
             switch recognizer.state {
             case .began:
                 view.timer?.invalidate()
@@ -95,7 +98,7 @@ extension NotificationView {
                     view.hideAfter(hideAfter)
                     view.top?.constant = 0
                     UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [.allowUserInteraction], animations: { 
-                        view.layoutIfNeeded()
+                        window.layoutIfNeeded()
                     }, completion: nil)
                 }
             case .failed, .cancelled:
@@ -120,24 +123,21 @@ extension NotificationView {
         window.isHidden = false
         window.addSubview(self)
         
-        let height = self.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-        
         top = topAnchor.constraint(equalTo: superview!.topAnchor)
         
-        self.constrain {[
+        constrain {[
             top!,
             $0.leadingAnchor.constraint(equalTo: $0.superview!.leadingAnchor),
-            $0.trailingAnchor.constraint(equalTo: $0.superview!.trailingAnchor),
-            $0.heightAnchor.constraint(equalToConstant: height)
+            $0.trailingAnchor.constraint(equalTo: $0.superview!.trailingAnchor)
         ]}
         
         top?.constant = -frame.height
-        self.layoutIfNeeded()
+        window.layoutIfNeeded()
         
         window.backgroundView.alpha = 0
         top?.constant = 0
         UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: [.allowUserInteraction], animations: {
-            self.layoutIfNeeded()
+            window.layoutIfNeeded()
             window.backgroundView.alpha = maskBackgroundOpacity
         }, completion: nil)
     }
@@ -149,7 +149,7 @@ extension NotificationView {
         
         top?.constant = -frame.height
         UIView.animate(withDuration: 0.25, delay: 0, options: [.allowUserInteraction, .curveEaseIn], animations: {
-            self.layoutIfNeeded()
+            window.layoutIfNeeded()
             window.backgroundView.alpha = 0
         }) { finished in
             self.removeFromSuperview()
@@ -234,6 +234,24 @@ extension NSMutableParagraphStyle {
         self.init()
         self.minimumLineHeight = minimumLineHeight
         self.alignment = alignment
+    }
+    
+}
+
+class MultilineLabel: UILabel {
+    
+    var insets = UIEdgeInsets(top: -1, left: 0, bottom: -1, right: 0)
+    
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
+    }
+    
+}
+
+extension UIColor {
+    
+    convenience init(red: Int, green: Int, blue: Int) {
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1)
     }
     
 }
