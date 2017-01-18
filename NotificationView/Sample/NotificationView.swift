@@ -108,7 +108,7 @@ class NotificationView: UIView {
     }
     
     class func show(title: String, subtitle: String, backgroundColor: UIColor, hideAfter: TimeInterval = 4) {
-        let view = NotificationView.loadFromNib(self)
+        let view = NotificationView.nib()
         view.backgroundView.backgroundColor = backgroundColor
         view.title = title
         view.subtitle = subtitle
@@ -182,8 +182,12 @@ private class Window: UIWindow {
 
 private extension UIView {
     
-    class func loadFromNib<T>(_ type: T.Type, owner: Any? = nil) -> T {
-        return Bundle.main.loadNibNamed(String(describing: type), owner: owner, options: nil)!.first as! T
+    class func nib() -> Self {
+        return nib(self)
+    }
+    
+    private class func nib<T>(_ type: T.Type) -> T {
+        return Bundle.main.loadNibNamed(String(describing: type), owner: nil, options: nil)!.first as! T
     }
     
 }
