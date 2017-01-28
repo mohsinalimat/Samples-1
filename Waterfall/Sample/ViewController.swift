@@ -25,7 +25,8 @@ class ViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        self.collectionView?.showsVerticalScrollIndicator = false
         
         let layout = CHTCollectionViewWaterfallLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -89,6 +90,8 @@ class Cell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.contentView.backgroundColor = .white
         
         self.contentView.layer.masksToBounds = true
         self.contentView.layer.cornerRadius = 3
