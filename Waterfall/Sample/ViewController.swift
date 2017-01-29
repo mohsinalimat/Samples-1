@@ -14,7 +14,7 @@ struct Item {
     let title: String
     
     static func make() -> Item {
-        return Item(image: randomImage(), title: randomText())
+        return Item(image: Random.image, title: Random.text)
     }
 }
 
@@ -22,21 +22,30 @@ class ViewController: UICollectionViewController {
     
     var items = [Item]()
     
+    lazy var layout: CHTCollectionViewWaterfallLayout = { [unowned self] in
+        let layout = CHTCollectionViewWaterfallLayout()
+        self.collectionView?.collectionViewLayout = layout
+        return layout
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
         self.collectionView?.showsVerticalScrollIndicator = false
         
-        let layout = CHTCollectionViewWaterfallLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 22, left: 10, bottom: 22, right: 10)
         layout.minimumColumnSpacing = 10
         layout.minimumInteritemSpacing = 10
-        self.collectionView?.collectionViewLayout = layout
         
-        DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+        let activity = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+        activity.center = self.view.center
+        activity.startAnimating()
+        self.view.addSubview(activity)
+        DispatchQueue.global().async { [unowned self] in
             self.items = (0...10).map { _ in Item.make() }
             DispatchQueue.main.async { [unowned self] in
+                activity.stopAnimating()
                 self.collectionView?.reloadData()
             }
         }
@@ -72,12 +81,21 @@ extension ViewController: CHTCollectionViewDelegateWaterfallLayout {
 
 class Cell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView! {
+        didSet {
+            imageView.contentMode = .scaleAspectFill
+        }
+    }
+    @IBOutlet weak var textLabel: UILabel! {
+        didSet {
+            textLabel.font = .preferredFont(forTextStyle: .body)
+        }
+    }
     @IBOutlet weak var detailTextLabel: UILabel! {
         didSet {
             let count = Int(arc4random_uniform(10))
             detailTextLabel.text = "\(count) likes"
+            detailTextLabel.font = .preferredFont(forTextStyle: .subheadline)
         }
     }
     @IBOutlet weak var button: UIButton! {
@@ -112,15 +130,19 @@ class Cell: UICollectionViewCell {
     
 }
 
-private func randomImage() -> UIImage {
-    let width = Int(arc4random_uniform(200)) + 100
-    let height = Int(arc4random_uniform(200)) + 100
-    return URL(string: "https://unsplash.it/\(width)/\(height)/?random").map { try! Data(contentsOf: $0) }.flatMap { UIImage(data: $0) } ?? UIImage()
-}
-
-private func randomText() -> String {
-    let text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
-    let length = Int(arc4random_uniform(200)) + 10
-    let end = text.characters.index(text.startIndex, offsetBy: length)
-    return text.substring(with: (text.startIndex ..< end))
+struct Random {
+    
+    static var image: UIImage {
+        let width = Int(arc4random_uniform(200)) + 100
+        let height = Int(arc4random_uniform(200)) + 100
+        return URL(string: "https://unsplash.it/\(width)/\(height)/?random").map { try! Data(contentsOf: $0) }.flatMap { UIImage(data: $0) } ?? UIImage()
+    }
+    
+    static var text: String {
+        let text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
+        let length = Int(arc4random_uniform(200)) + 10
+        let end = text.characters.index(text.startIndex, offsetBy: length)
+        return text.substring(with: (text.startIndex ..< end))
+    }
+    
 }
