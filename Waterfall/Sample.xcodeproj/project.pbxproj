@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3B647F09ADC40B026F444150 /* Pods_Sample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89314C69AF643E4181F45686 /* Pods_Sample.framework */; };
+		8BAF2A9D1E3EB73400A13C9F /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF2A9C1E3EB73400A13C9F /* PinterestLayout.swift */; };
+		8BAF2A9F1E3EBC8800A13C9F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF2A9E1E3EBC8800A13C9F /* Item.swift */; };
+		8BAF2AA11E3EC0A200A13C9F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF2AA01E3EC0A200A13C9F /* Cell.swift */; };
+		8BAF2AA31E3EC5CE00A13C9F /* Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BAF2AA21E3EC5CE00A13C9F /* Cell.xib */; };
 		8BD9FDCB1E3C1950004BF036 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD9FDCA1E3C1950004BF036 /* AppDelegate.swift */; };
 		8BD9FDCD1E3C1950004BF036 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD9FDCC1E3C1950004BF036 /* ViewController.swift */; };
 		8BD9FDD01E3C1950004BF036 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BD9FDCE1E3C1950004BF036 /* Main.storyboard */; };
@@ -19,6 +23,10 @@
 		62BEEB66576A506EC1176B9A /* Pods-Sample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sample/Pods-Sample.release.xcconfig"; sourceTree = "<group>"; };
 		7F4536CFAE7F12909BA29DA9 /* Pods-Sample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sample/Pods-Sample.debug.xcconfig"; sourceTree = "<group>"; };
 		89314C69AF643E4181F45686 /* Pods_Sample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BAF2A9C1E3EB73400A13C9F /* PinterestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		8BAF2A9E1E3EBC8800A13C9F /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		8BAF2AA01E3EC0A200A13C9F /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		8BAF2AA21E3EC5CE00A13C9F /* Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Cell.xib; sourceTree = "<group>"; };
 		8BD9FDC71E3C1950004BF036 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BD9FDCA1E3C1950004BF036 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BD9FDCC1E3C1950004BF036 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +80,10 @@
 			children = (
 				8BD9FDCA1E3C1950004BF036 /* AppDelegate.swift */,
 				8BD9FDCC1E3C1950004BF036 /* ViewController.swift */,
+				8BAF2A9C1E3EB73400A13C9F /* PinterestLayout.swift */,
+				8BAF2A9E1E3EBC8800A13C9F /* Item.swift */,
+				8BAF2AA01E3EC0A200A13C9F /* Cell.swift */,
+				8BAF2AA21E3EC5CE00A13C9F /* Cell.xib */,
 				8BD9FDCE1E3C1950004BF036 /* Main.storyboard */,
 				8BD9FDD11E3C1950004BF036 /* Assets.xcassets */,
 				8BD9FDD31E3C1950004BF036 /* LaunchScreen.storyboard */,
@@ -151,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BD9FDD51E3C1950004BF036 /* LaunchScreen.storyboard in Resources */,
+				8BAF2AA31E3EC5CE00A13C9F /* Cell.xib in Resources */,
 				8BD9FDD21E3C1950004BF036 /* Assets.xcassets in Resources */,
 				8BD9FDD01E3C1950004BF036 /* Main.storyboard in Resources */,
 			);
@@ -211,6 +224,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BAF2A9F1E3EBC8800A13C9F /* Item.swift in Sources */,
+				8BAF2A9D1E3EB73400A13C9F /* PinterestLayout.swift in Sources */,
+				8BAF2AA11E3EC0A200A13C9F /* Cell.swift in Sources */,
 				8BD9FDCD1E3C1950004BF036 /* ViewController.swift in Sources */,
 				8BD9FDCB1E3C1950004BF036 /* AppDelegate.swift in Sources */,
 			);
