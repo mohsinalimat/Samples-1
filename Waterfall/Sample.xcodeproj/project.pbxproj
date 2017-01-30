@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B647F09ADC40B026F444150 /* Pods_Sample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89314C69AF643E4181F45686 /* Pods_Sample.framework */; };
+		8B1619B51E3FA7B300866079 /* ResizingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1619B41E3FA7B300866079 /* ResizingImageView.swift */; };
 		8BAF2A9D1E3EB73400A13C9F /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF2A9C1E3EB73400A13C9F /* PinterestLayout.swift */; };
 		8BAF2A9F1E3EBC8800A13C9F /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF2A9E1E3EBC8800A13C9F /* Item.swift */; };
 		8BAF2AA11E3EC0A200A13C9F /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAF2AA01E3EC0A200A13C9F /* Cell.swift */; };
@@ -23,6 +24,7 @@
 		62BEEB66576A506EC1176B9A /* Pods-Sample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.release.xcconfig"; path = "Pods/Target Support Files/Pods-Sample/Pods-Sample.release.xcconfig"; sourceTree = "<group>"; };
 		7F4536CFAE7F12909BA29DA9 /* Pods-Sample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Sample/Pods-Sample.debug.xcconfig"; sourceTree = "<group>"; };
 		89314C69AF643E4181F45686 /* Pods_Sample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B1619B41E3FA7B300866079 /* ResizingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizingImageView.swift; sourceTree = "<group>"; };
 		8BAF2A9C1E3EB73400A13C9F /* PinterestLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		8BAF2A9E1E3EBC8800A13C9F /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		8BAF2AA01E3EC0A200A13C9F /* Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				8BD9FDCC1E3C1950004BF036 /* ViewController.swift */,
 				8BAF2A9C1E3EB73400A13C9F /* PinterestLayout.swift */,
 				8BAF2A9E1E3EBC8800A13C9F /* Item.swift */,
+				8B1619B41E3FA7B300866079 /* ResizingImageView.swift */,
 				8BAF2AA01E3EC0A200A13C9F /* Cell.swift */,
 				8BAF2AA21E3EC5CE00A13C9F /* Cell.xib */,
 				8BD9FDCE1E3C1950004BF036 /* Main.storyboard */,
@@ -227,6 +230,7 @@
 				8BAF2A9F1E3EBC8800A13C9F /* Item.swift in Sources */,
 				8BAF2A9D1E3EB73400A13C9F /* PinterestLayout.swift in Sources */,
 				8BAF2AA11E3EC0A200A13C9F /* Cell.swift in Sources */,
+				8B1619B51E3FA7B300866079 /* ResizingImageView.swift in Sources */,
 				8BD9FDCD1E3C1950004BF036 /* ViewController.swift in Sources */,
 				8BD9FDCB1E3C1950004BF036 /* AppDelegate.swift in Sources */,
 			);
