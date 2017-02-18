@@ -1,63 +1,87 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
+import PlaygroundSupport
 
-//protocol Funnel {
-//    associatedtype T
-//    var value: T? { get set }
-//    var blocks: [(T) -> Void]? { get set }
-//}
-//
-//extension Funnel where Self: AnyObject {
-//    mutating func once(perform: (_ next: @escaping (T) -> Void) -> Void, block: @escaping (T) -> Void) {
-//        if let value = value {
-//            block(value)
-//        } else {
-//            if blocks?.isEmpty ?? false {
-//                perform { [weak self] value in
-//                    self?.blocks?.forEach { $0(value) }
-//                    self?.blocks = nil
-//                }
-//            }
-//            blocks?.append(block)
-//        }
-//    }
-//}
-//
-//extension NSObject: Funnel {}
-
-class Funnel<T> {
-    
+protocol SomeProtocol {
+    associatedtype T
     typealias Closure = (T) -> Void
-    
-    private var value: T?
-    private var blocks = [(T) -> Void]()
-    
-    func once(perform: (_ next: @escaping Closure) -> Void, block: @escaping Closure) {
-        if let value = value {
-            block(value)
-        } else {
-            if blocks.isEmpty {
-                perform { [weak self] value in
-                    self?.value = value
-                    self?.blocks.forEach { $0(value) }
-                    self?.blocks = []
-                }
-            }
-            blocks += [block]
-        }
-    }
-    
+    var blocks: [Closure] { get set }
 }
 
-// perform async block once
-Funnel<String>().once(perform: { next in
-    // do something async
-    DispatchQueue.global().async {
-        // call next when completed
-        next("hello")
+class SomeClass<T>: SomeProtocol {
+    typealias Closure = (T) -> Void
+    var blocks: [Closure]
+    
+    init() {
+        self.blocks = [Closure]()
     }
-}, block: { value in
-    // calls block once ready
+    
+    func bar(perform: (_ next: @escaping Closure) -> Void, completion: @escaping Closure) {
+        if blocks.isEmpty {
+            perform { [unowned self] value in
+                self.blocks.forEach { $0(value) }
+                self.blocks = []
+            }
+        }
+        blocks += [completion]
+    }
+    
+    deinit {
+        print("CompilerWarning DEALLOCATED")
+    }
+}
+
+// example
+PlaygroundPage.current.needsIndefiniteExecution = true
+var foo: SomeClass? = SomeClass<String>()
+foo?.bar(perform: { next in
+    DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        next("hello") // call next when completed
+    }
+}, completion: { value in // completion
     print(value)
+    foo = nil
+    PlaygroundPage.current.finishExecution()
 })
+
+class SomeSubclass<T>: SomeClass<T> {
+    var value: T?
+    
+    override func bar(perform: (_ next: @escaping Closure) -> Void, completion: @escaping Closure) {
+        if let value = value {
+            completion(value)
+        } else {
+            super.bar(perform: perform) { [unowned self] value in
+                self.value = value
+                completion(value)
+            }
+        }
+    }
+}
+
+// example
+PlaygroundPage.current.needsIndefiniteExecution = true
+var foo2: SomeSubclass? = SomeSubclass<String>()
+foo2?.bar(perform: { next in
+    DispatchQueue.global().asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        next("hello2") // call next when completed
+    }
+}, completion: { value in // completion
+    print(value)
+    foo2 = nil
+    PlaygroundPage.current.finishExecution()
+})
+
+//extension SomeProtocol where Self: AnyObject {
+//    mutating func bar(perform: (_ next: @escaping Closure) -> Void, completion: @escaping Closure) {
+//        if blocks.isEmpty {
+//            perform { [unowned self] value in
+//                var this = self
+//                this.blocks.forEach { $0(value) }
+//                this.blocks = []
+//            }
+//        }
+//        blocks += [completion]
+//    }
+//}
