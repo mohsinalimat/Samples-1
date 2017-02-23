@@ -110,5 +110,3 @@ do {
 } catch ElevatorError.invalidFloor(let floor) {
     print("invalid floor: \(floor)")
 }
-
-
