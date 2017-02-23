@@ -12,6 +12,7 @@ import Foundation
 
 typealias Floor = Int
 
+// Passenger
 struct Passenger: Hashable {
     let id: Int // unique id to make hashable
     let from: Floor
@@ -28,6 +29,7 @@ func ==(lhs: Passenger, rhs: Passenger) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
+// Elevator
 struct Elevator {
     let min: Floor // min floor
     let max: Floor // max floor
@@ -44,7 +46,7 @@ struct Elevator {
     }
     
     mutating func add(_ passenger: Passenger) {
-        requests.insert(passenger)
+        requests.insert(passenger) // add passenger to request queue
     }
     
     mutating func run() {
@@ -77,7 +79,7 @@ struct Elevator {
     }
 }
 
-// demo
+// Demo
 var elevator = Elevator(floors: 4)
 elevator.add(Passenger(id: 0, from: 1, to: 3))
 elevator.add(Passenger(id: 1, from: 2, to: 1))
