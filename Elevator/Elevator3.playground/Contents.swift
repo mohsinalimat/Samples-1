@@ -31,12 +31,12 @@ func ==(lhs: Passenger, rhs: Passenger) -> Bool {
 
 // Elevator
 struct Elevator {
-    let min: Floor // min floor
-    let max: Floor // max floor
-    var current: Floor // current floor
+    private let min: Floor // min floor
+    private let max: Floor // max floor
+    private var current: Floor // current floor
     private var up: Bool // direction
-    private var requests = Set<Passenger>() // requests
-    private var passengers = Set<Passenger>() // passengers
+    private(set) var requests = Set<Passenger>() // requests
+    private(set) var passengers = Set<Passenger>() // passengers
     
     init(floors: Int) {
         self.min = 1 // starts at 1st floor
@@ -53,14 +53,18 @@ struct Elevator {
         while !requests.isEmpty || !passengers.isEmpty {
             print("current floor: \(current)")
             
+            print("requests: \(requests.count), passengers: \(passengers.count)")
+            
             // pick up passengers waiting on the current floor if in the same direction
             requests.filter { $0.from == current && $0.up == up }.forEach {
+                print("picked up: \($0)")
                 requests.remove($0)
                 passengers.insert($0)
             }
             
             // drop off passengers that requested current floor
             passengers.filter { $0.to == current }.forEach {
+                print("dropped off: \($0)")
                 passengers.remove($0)
             }
             
@@ -80,7 +84,21 @@ struct Elevator {
 }
 
 // Demo
+print("\ndemo 1\n")
+
 var elevator = Elevator(floors: 4)
+elevator.add(Passenger(id: 0, from: 1, to: 2))
+elevator.run()
+
+print("\ndemo 2\n")
+
 elevator.add(Passenger(id: 0, from: 1, to: 3))
 elevator.add(Passenger(id: 1, from: 2, to: 1))
+elevator.run()
+
+print("\ndemo 3\n")
+
+elevator.add(Passenger(id: 0, from: 4, to: 3))
+elevator.add(Passenger(id: 1, from: 1, to: 2))
+elevator.add(Passenger(id: 2, from: 1, to: 4))
 elevator.run()
