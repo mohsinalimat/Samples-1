@@ -30,14 +30,14 @@ extension Passenger: Hashable {
 }
 
 func ==(lhs: Passenger, rhs: Passenger) -> Bool {
-    return lhs.id == rhs.id
+    return lhs.hashValue == rhs.hashValue
 }
 
 struct Elevator {
     let min: Floor // min floor
     let max: Floor // max floor
     var current: Floor // current floor
-    private var up = true
+    private var up = true // direction
     private var waiting = Set<Passenger>() {
         didSet {
             print("waiting: \(waiting)")
@@ -65,9 +65,6 @@ struct Elevator {
             
 //            let upCount = waiting.filter { $0.from > current }.count + carrying.filter { $0.to > current }.count
 //            let downCount = waiting.filter { $0.from < current }.count + carrying.filter { $0.to < current }.count
-//            
-//            print(upCount)
-//            print(downCount)
             
             if up && current < max {
                 current += 1
