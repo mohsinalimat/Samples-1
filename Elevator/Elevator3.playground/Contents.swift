@@ -90,15 +90,39 @@ var elevator = Elevator(floors: 4)
 elevator.add(Passenger(id: 0, from: 1, to: 2))
 elevator.run()
 
+if elevator.requests.isEmpty && elevator.passengers.isEmpty {
+    print("passing")
+}
+
 print("\ndemo 2\n")
 
 elevator.add(Passenger(id: 0, from: 1, to: 3))
 elevator.add(Passenger(id: 1, from: 2, to: 1))
 elevator.run()
 
+if elevator.requests.isEmpty && elevator.passengers.isEmpty {
+    print("passing")
+}
+
 print("\ndemo 3\n")
 
 elevator.add(Passenger(id: 0, from: 4, to: 3))
 elevator.add(Passenger(id: 1, from: 1, to: 2))
-elevator.add(Passenger(id: 2, from: 1, to: 4))
+elevator.add(Passenger(id: 2, from: 2, to: 4))
+elevator.add(Passenger(id: 3, from: 3, to: 1))
 elevator.run()
+
+if elevator.requests.isEmpty && elevator.passengers.isEmpty {
+    print("passing")
+}
+
+class TestCase: XCTestCase {
+    func testAssertions() {
+        XCTAssertEqual(1, 2)
+        XCTAssertEqual([1, 2], [2, 3])
+        XCTAssertGreaterThanOrEqual(1, 2)
+        XCTAssertTrue(true)
+    }
+}
+
+TestCase()
