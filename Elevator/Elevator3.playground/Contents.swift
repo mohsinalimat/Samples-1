@@ -83,46 +83,70 @@ struct Elevator {
     }
 }
 
-// Demo
-print("\ndemo 1\n")
-
-var elevator = Elevator(floors: 4)
-elevator.add(Passenger(id: 0, from: 1, to: 2))
-elevator.run()
-
-if elevator.requests.isEmpty && elevator.passengers.isEmpty {
-    print("passing")
-}
-
-print("\ndemo 2\n")
-
-elevator.add(Passenger(id: 0, from: 1, to: 3))
-elevator.add(Passenger(id: 1, from: 2, to: 1))
-elevator.run()
-
-if elevator.requests.isEmpty && elevator.passengers.isEmpty {
-    print("passing")
-}
-
-print("\ndemo 3\n")
-
-elevator.add(Passenger(id: 0, from: 4, to: 3))
-elevator.add(Passenger(id: 1, from: 1, to: 2))
-elevator.add(Passenger(id: 2, from: 2, to: 4))
-elevator.add(Passenger(id: 3, from: 3, to: 1))
-elevator.run()
-
-if elevator.requests.isEmpty && elevator.passengers.isEmpty {
-    print("passing")
-}
-
+// Tests
 class TestCase: XCTestCase {
     func testAssertions() {
-        XCTAssertEqual(1, 2)
-        XCTAssertEqual([1, 2], [2, 3])
-        XCTAssertGreaterThanOrEqual(1, 2)
-        XCTAssertTrue(true)
+        var elevator = Elevator(floors: 4)
+        // take passengers to their requested floor
+        elevator.add(Passenger(id: 0, from: 1, to: 2))
+        elevator.run()
+        
+        XCTAssertTrue(elevator.requests.isEmpty, "Passengers still waiting")
+        XCTAssertTrue(elevator.passengers.isEmpty, "Passengers still inside elevator")
     }
+    
+    func testAssertions2() {
+        var elevator = Elevator(floors: 4)
+        // take passengers to their requested floor
+        elevator.add(Passenger(id: 0, from: 1, to: 3))
+        elevator.add(Passenger(id: 1, from: 2, to: 1))
+        elevator.run()
+        
+        XCTAssertTrue(elevator.requests.isEmpty, "Passengers still waiting")
+        XCTAssertTrue(elevator.passengers.isEmpty, "Passengers still inside elevator")
+    }
+    
+    func testAssertions3() {
+        var elevator = Elevator(floors: 4)
+        // take passengers to their requested floor
+        elevator.add(Passenger(id: 0, from: 4, to: 3))
+        elevator.add(Passenger(id: 1, from: 1, to: 2))
+        elevator.add(Passenger(id: 2, from: 2, to: 4))
+        elevator.add(Passenger(id: 3, from: 3, to: 1))
+        elevator.run()
+        
+        XCTAssertTrue(elevator.requests.isEmpty, "Passengers still waiting")
+        XCTAssertTrue(elevator.passengers.isEmpty, "Passengers still inside elevator")
+    }
+    
+    func testAssertions4() {
+        let passengers = [
+            Passenger(id: 0, from: 4, to: 3),
+            Passenger(id: 1, from: 1, to: 2),
+            Passenger(id: 2, from: 2, to: 4),
+            Passenger(id: 3, from: 3, to: 1)
+        ]
+        
+        var elevator = Elevator(floors: 4)
+        // take passengers to their requested floor
+        passengers.forEach {
+            elevator.add($0)
+        }
+        elevator.run()
+        
+        // bring passengers back to their original floor
+        passengers.forEach {
+            elevator.add(Passenger(id: $0.id, from: $0.to, to: $0.from))
+        }
+        elevator.run()
+        
+        XCTAssertTrue(elevator.requests.isEmpty, "Passengers still waiting")
+        XCTAssertTrue(elevator.passengers.isEmpty, "Passengers still inside elevator")
+    }
+    
+    // future tests
+    // - test if passengers arrived at their requested floors
+    // - test if elevator changes direction based on passengers requests
 }
 
 TestCase()
