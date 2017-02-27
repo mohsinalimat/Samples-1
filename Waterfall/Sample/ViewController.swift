@@ -20,6 +20,10 @@ class ViewController: UICollectionViewController {
             layout.delegate = self
             return layout
         }()
+        
+//        self.collectionView?.collectionViewLayout = CollectionViewFlowLayout()
+//        (self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout)?.estimatedItemSize = CGSize(width: 100, height: 100)
+        
         self.collectionView?.backgroundColor = UIColor(white: 0.9, alpha: 1)
         self.collectionView?.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.collectionView?.showsVerticalScrollIndicator = false
@@ -59,13 +63,27 @@ extension ViewController {
 extension ViewController: PinterestLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, heightForItemAt indexPath: IndexPath, with width: CGFloat) -> CGFloat {
-        let item = items[indexPath.row]
-        
         let cell = UINib(nibName: String(describing: Cell.self), bundle: nil).instantiate(withOwner: nil, options: nil).first as! Cell
-        NSLayoutConstraint.activate([cell.contentView.widthAnchor.constraint(equalToConstant: width)])
-        
-        cell.configure(item)
+        cell.constrain { [$0.contentView.widthAnchor.constraint(equalToConstant: width)] }
+        cell.configure(items[indexPath.row])
         return cell.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
     }
     
 }
+
+//class CollectionViewFlowLayout: UICollectionViewFlowLayout {
+//    
+//    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+//        let layoutAttributes = super.layoutAttributesForItem(at: indexPath)?.copy() as! UICollectionViewLayoutAttributes
+//        layoutAttributes.size.width = collectionView!.bounds.width / 2
+//        return layoutAttributes
+//    }
+//    
+//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+//        let layoutAttributes = super.layoutAttributesForElements(in: rect)!
+//        var array = [UICollectionViewLayoutAttributes]()
+//        array += layoutAttributes.flatMap { layoutAttributesForItem(at: $0.indexPath) }
+//        return array
+//    }
+//    
+//}

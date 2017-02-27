@@ -10,11 +10,8 @@ import UIKit
 
 class Cell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIImageView! {
-        didSet {
-            imageView.contentMode = .scaleAspectFit
-        }
-    }
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textLabel: UILabel! {
         didSet {
             textLabel.font = .preferredFont(forTextStyle: .body)
@@ -56,5 +53,15 @@ class Cell: UICollectionViewCell {
         imageView.image = item.image
         textLabel.text = item.title
     }
+    
+//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        print("---> 2")
+//        print(layoutAttributes.size)
+//        let layoutAttributes = super.preferredLayoutAttributesFitting(layoutAttributes)
+//        print(layoutAttributes.size)
+//        layoutAttributes.size = systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+//        print(layoutAttributes.size)
+//        return layoutAttributes
+//    }
     
 }

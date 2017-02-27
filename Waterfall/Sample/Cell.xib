@@ -84,6 +84,7 @@
                 <outlet property="button" destination="iiu-Cy-vPG" id="F6S-QL-aRL"/>
                 <outlet property="detailTextLabel" destination="zdl-eK-hqN" id="Hgl-sk-Miy"/>
                 <outlet property="imageView" destination="9RA-ma-lSh" id="KwQ-c8-Ssz"/>
+                <outlet property="stackView" destination="YwE-lI-Md2" id="AjL-H5-5Nk"/>
                 <outlet property="textLabel" destination="VWl-DS-uwx" id="RI9-Sa-A7L"/>
             </connections>
         </collectionViewCell>
