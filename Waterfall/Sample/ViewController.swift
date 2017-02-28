@@ -63,10 +63,9 @@ extension ViewController {
 extension ViewController: PinterestLayoutDelegate {
     
     func collectionView(_ collectionView: UICollectionView, heightForItemAt indexPath: IndexPath, with width: CGFloat) -> CGFloat {
-        let cell = UINib(nibName: String(describing: Cell.self), bundle: nil).instantiate(withOwner: nil, options: nil).first as! Cell
-        cell.constrain { [$0.contentView.widthAnchor.constraint(equalToConstant: width)] }
+        let cell = Cell.makeCell(width: width)
         cell.configure(items[indexPath.row])
-        return cell.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
+        return cell.stackView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
     }
     
 }

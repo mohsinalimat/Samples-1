@@ -64,4 +64,14 @@ class Cell: UICollectionViewCell {
 //        return layoutAttributes
 //    }
     
+    private static var sharedInstance: Cell!
+    
+    static func makeCell(width: CGFloat) -> Cell {
+        if sharedInstance == nil {
+            sharedInstance = UINib(nibName: String(describing: Cell.self), bundle: nil).instantiate(withOwner: nil, options: nil).first as! Cell
+            sharedInstance.constrain { [$0.stackView.widthAnchor.constraint(equalToConstant: width)] }
+        }
+        return sharedInstance
+    }
+    
 }
