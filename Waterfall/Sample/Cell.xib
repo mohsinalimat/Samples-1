@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="SZF-PY-iKx" customClass="Cell" customModule="Sample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="400"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="200" height="400"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YwE-lI-Md2">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="400"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9RA-ma-lSh" customClass="ResizingImageView" customModule="Sample" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="200" height="329.5"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mDI-Ap-XOI">
+                                <rect key="frame" x="0.0" y="329.5" width="200" height="30.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWl-DS-uwx">
+                                        <rect key="frame" x="5" y="5" width="190" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="VWl-DS-uwx" secondAttribute="bottom" constant="5" id="6lg-G5-ko6"/>
+                                    <constraint firstItem="VWl-DS-uwx" firstAttribute="leading" secondItem="mDI-Ap-XOI" secondAttribute="leading" constant="5" id="sN5-3u-E1J"/>
+                                    <constraint firstItem="VWl-DS-uwx" firstAttribute="top" secondItem="mDI-Ap-XOI" secondAttribute="top" constant="5" id="vml-xJ-WcZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="VWl-DS-uwx" secondAttribute="trailing" constant="5" id="wOF-S0-mfe"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TWl-xr-MLb">
+                                <rect key="frame" x="0.0" y="360" width="200" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="l4S-ms-CCU">
+                                        <rect key="frame" x="5" y="0.0" width="190" height="40"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdl-eK-hqN">
+                                                <rect key="frame" x="0.0" y="0.0" width="42" height="40"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iiu-Cy-vPG">
+                                                <rect key="frame" x="144" y="0.0" width="46" height="40"/>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.94999999999999996" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="l4S-ms-CCU" firstAttribute="top" secondItem="TWl-xr-MLb" secondAttribute="top" id="5js-fV-xqm"/>
+                                    <constraint firstItem="l4S-ms-CCU" firstAttribute="leading" secondItem="TWl-xr-MLb" secondAttribute="leading" constant="5" id="MxD-Cn-ZnS"/>
+                                    <constraint firstAttribute="bottom" secondItem="l4S-ms-CCU" secondAttribute="bottom" id="oPZ-NB-tdR"/>
+                                    <constraint firstAttribute="height" constant="40" id="pLn-Ae-DvT"/>
+                                    <constraint firstAttribute="trailing" secondItem="l4S-ms-CCU" secondAttribute="trailing" constant="5" id="s6e-WJ-cYR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="YwE-lI-Md2" firstAttribute="leading" secondItem="SZF-PY-iKx" secondAttribute="leading" id="61x-Zt-tCd"/>
+                <constraint firstAttribute="trailing" secondItem="YwE-lI-Md2" secondAttribute="trailing" id="6aU-az-JCZ"/>
+                <constraint firstAttribute="bottom" secondItem="YwE-lI-Md2" secondAttribute="bottom" id="7qG-Mp-HP9"/>
+                <constraint firstItem="YwE-lI-Md2" firstAttribute="top" secondItem="SZF-PY-iKx" secondAttribute="top" id="qLg-Ji-TnR"/>
+            </constraints>
+            <connections>
+                <outlet property="button" destination="iiu-Cy-vPG" id="F6S-QL-aRL"/>
+                <outlet property="detailTextLabel" destination="zdl-eK-hqN" id="Hgl-sk-Miy"/>
+                <outlet property="imageView" destination="9RA-ma-lSh" id="KwQ-c8-Ssz"/>
+                <outlet property="stackView" destination="YwE-lI-Md2" id="AjL-H5-5Nk"/>
+                <outlet property="textLabel" destination="VWl-DS-uwx" id="RI9-Sa-A7L"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
