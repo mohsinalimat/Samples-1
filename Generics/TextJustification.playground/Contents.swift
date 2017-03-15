@@ -23,21 +23,11 @@ extension String {
             }
             return accumulator.stack + [accumulator.current]
         }()
-//        for (index, words) in lines.enumerated() {
-//            var words = words
-//            let remainder = max - words.joined(separator: "").characters.count
-//            (0...remainder).reversed().forEach { index in
-//                if words.count > 1 {
-//                    words[index % (words.count - 1)] += " "
-//                }
-//            }
-//            lines[index] = words
-//        }
         return lines.map { $0.joined(separator: "") }.joined(separator: "\n")
     }
     
 }
 
-let string = "given a list of words and a window size of w. justification"
+let string = "given a list of words, and a window size of w. justification"
 let justified = string.justified(max: 20)
 print(justified)
